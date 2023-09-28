@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "compile",
+      "type": "shell",
+      "command": "g++",
+      "args": ["-std=c++17", "-o", "${fileBasenameNoExtension}", "${file}"],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "label": "compile and run",
+      "type": "shell",
+      "command": "g++",
+      "args": [
+        "-std=c++17",
+        "-o",
+        "${relativeFileDirname}/${fileBasenameNoExtension}",
+        "${file}",
+        "&&",
+        "${relativeFileDirname}/${fileBasenameNoExtension}",
+        "<",
+        "${fileWorkspaceFolder}/${relativeFileDirname}/input.txt",
+        ">",
+        "${fileWorkspaceFolder}/${relativeFileDirname}/output.txt"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}

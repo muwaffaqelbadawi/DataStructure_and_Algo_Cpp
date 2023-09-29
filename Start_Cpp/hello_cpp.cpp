@@ -198,21 +198,149 @@ void printP11(int n)
         }
         cout << endl;
     }
-    
-};
+}
+void printP12(int n) {
+    for (int i = 1; i < n; i++)
+    {
+        int start = 1;
+        for (int j = start; j <= i; j++)
+        {
+            cout << start << " ";
+            ++start;
+        }
+        cout << endl;
+    }
+}
+void printP121(int n)
+{
+    int space = 2 * (n - 1);
+    for (int i = 1; i <= n; i++)
+    {
+
+        for (int j = 1; j <= i; j++)
+        {
+            // Numbers
+            cout << j;
+            // ++start;
+        }
+        //  Space
+        for (int k = 1; k <= space; k++)
+        {
+            // Space
+            cout << " ";
+        }
+
+        for (int l = i; l >= 1; l--)
+        {
+            // Reverse numbers
+            cout << l;
+        }
+        cout << endl;
+        space -= 2;
+    }
+}
+void printP13(int n)
+{
+    int num = 1;
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= i; j++)
+        {
+            cout << num << " ";
+            num++;
+        }
+        cout << endl;
+    }
+}
+void printP14(int n)
+{
+    for (int i = 1; i<=n; i++) {
+        int num = 65;
+        for(int j=1; j<=i; j++) {
+            cout << char(num);
+            num++;
+        }
+        cout << endl;
+    }
+}
+void printP141(int n) {
+    for (int i = 1; i<n; i++) {
+        for(char ch='A'; ch < 'A' + i; ch++) {
+            cout << ch;
+        }
+        cout << endl;
+    }
+}
+void printP15(int n) {
+    for (int i = 1; i<=n; i++) {
+        for (char ch = 'A'; ch <= 'A' + n-i; ch++)
+        {
+            cout << ch;
+        }
+        cout << endl;
+    }
+}
+void printP16(int n) {
+
+    for (int i = 1; i <= n; i++)
+    {
+        char ch = 'A' + i - 1;
+        
+        /* int num = 65;        
+        for (int j=1; j<=i; j++) {
+            cout << char(num);
+        }
+        cout << endl;
+        num++;
+        */
+
+        for (int j = 1; j <= i; j++)
+        {
+            cout << ch;
+        }
+        cout << endl;
+    }
+}
+
+
+void printP17(int n) {
+
+    for (int i = 0; i <= n; i++) {
+        for (int j = 1; j <= n-i; j++)
+        {
+            // Space
+            cout << " ";
+        }
+
+        for (int k = 1; k <= 2*i + 1; k++)
+        {
+
+            cout << "*";
+        }
+
+        for (int l = 1; l <= n-i; l++)
+        {
+            // Space
+            cout << " ";
+        }
+        cout << endl;
+    }
+}
 
 int main()
 {
     int t;
     cin >> t;
 
-    for (int i = 0; i < t; i++)
-    {
+    for (int i = 0; i < t; i++) {
         // Test Cases
         int n;
         cin >> n;
-        printP11(n);
+        printP17(n);
     }
-
     return 0;
 }
+
+/* char ch = 'A';
+    cout << char(ch + 1) << endl;
+    cout << char(char(65) + 1); */

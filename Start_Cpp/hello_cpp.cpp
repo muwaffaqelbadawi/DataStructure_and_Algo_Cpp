@@ -199,7 +199,8 @@ void printP11(int n)
         cout << endl;
     }
 }
-void printP12(int n) {
+void printP12(int n)
+{
     for (int i = 1; i < n; i++)
     {
         int start = 1;
@@ -254,39 +255,47 @@ void printP13(int n)
 }
 void printP14(int n)
 {
-    for (int i = 1; i<=n; i++) {
+    for (int i = 1; i <= n; i++)
+    {
         int num = 65;
-        for(int j=1; j<=i; j++) {
+        for (int j = 1; j <= i; j++)
+        {
             cout << char(num);
             num++;
         }
         cout << endl;
     }
 }
-void printP141(int n) {
-    for (int i = 1; i<n; i++) {
-        for(char ch='A'; ch < 'A' + i; ch++) {
-            cout << ch;
-        }
-        cout << endl;
-    }
-}
-void printP15(int n) {
-    for (int i = 1; i<=n; i++) {
-        for (char ch = 'A'; ch <= 'A' + n-i; ch++)
+void printP141(int n)
+{
+    for (int i = 1; i < n; i++)
+    {
+        for (char ch = 'A'; ch < 'A' + i; ch++)
         {
             cout << ch;
         }
         cout << endl;
     }
 }
-void printP16(int n) {
+void printP15(int n)
+{
+    for (int i = 1; i <= n; i++)
+    {
+        for (char ch = 'A'; ch <= 'A' + n - i; ch++)
+        {
+            cout << ch;
+        }
+        cout << endl;
+    }
+}
+void printP16(int n)
+{
 
     for (int i = 1; i <= n; i++)
     {
         char ch = 'A' + i - 1;
-        
-        /* int num = 65;        
+
+        /* int num = 65;
         for (int j=1; j<=i; j++) {
             cout << char(num);
         }
@@ -301,27 +310,230 @@ void printP16(int n) {
         cout << endl;
     }
 }
-
-
-void printP17(int n) {
-
-    for (int i = 0; i <= n; i++) {
-        for (int j = 1; j <= n-i; j++)
+void printP17(int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        // Space
+        for (int j = 0; j < n - i - 1; j++)
         {
-            // Space
             cout << " ";
         }
 
-        for (int k = 1; k <= 2*i + 1; k++)
+        // Characters
+        char ch = 'A';
+        int breakpoint = (2 * i + 1) / 2;
+        for (int k = 1; k <= 2 * i + 1; k++)
         {
+            cout << ch;
 
+            // Observ Symmetry
+            if (k <= breakpoint)
+                ch++;
+            else
+                ch--;
+        }
+
+        // Space
+        for (int l = 1; l < n - i - 1; l++)
+        {
+            cout << " ";
+        }
+        cout << endl;
+    }
+}
+void printP18(int n)
+{
+    /* for(int i=0; i<n; i++)
+    {
+        char ch = 'A' + i;
+        for(int j=i; j<n; j++)
+        {
+            cout << ch;
+            ch++;
+        }
+        cout << endl;
+    } */
+
+    for (int i = 0; i < n; i++)
+    {
+        /* char ch = 'E' - i;
+        for (int j = 0; j <= i; j++)
+        {
+            cout << ch;
+            ch++;
+        } */
+
+        for (char ch = 'E' - i; ch <= 'E'; ch++)
+        {
+            cout << ch << " ";
+        }
+        cout << endl;
+    }
+}
+void printP19(int n)
+{
+    for (int i = 0; i <= 2 * n; i++)
+    {
+        int stars_num = n - i;
+        int space_num = 2 * i;
+        if (i > n)
+        {
+            stars_num = i - n;
+            space_num = 2 * (2 * n - i);
+        }
+        // Stars
+        for (int j = 1; j <= stars_num; j++)
+        {
             cout << "*";
         }
-
-        for (int l = 1; l <= n-i; l++)
+        // Spaces
+        for (int k = 1; k <= space_num; k++)
         {
-            // Space
             cout << " ";
+        }
+        // Stars
+        for (int l = 1; l <= stars_num; l++)
+        {
+            cout << "*";
+        }
+        cout << endl;
+    }
+}
+void printP191(int n)
+{
+    int spaces = 0;
+    for (int i = 0; i < n; i++)
+    {
+        // Stars
+        for (int j = 1; j <= n - i; j++)
+        {
+            cout << "*";
+        }
+        // Spaces
+        for (int k = 1; k <= spaces; k++)
+        {
+            cout << " ";
+        }
+        // Stars
+        for (int l = 1; l <= n - i; l++)
+        {
+            cout << "*";
+        }
+        spaces += 2;
+        cout << endl;
+    }
+
+    spaces = 2 * n - 2;
+    for (int i = 1; i <= n; i++)
+    {
+        // Stars
+        for (int j = 1; j <= i; j++)
+        {
+            cout << "*";
+        }
+        // Spaces
+        for (int k = 0; k < spaces; k++)
+        {
+            cout << " ";
+        }
+        // Stars
+        for (int l = 1; l <= i; l++)
+        {
+            cout << "*";
+        }
+        spaces -= 2;
+        cout << endl;
+    }
+}
+void printP20(int n)
+{
+
+    for (int i = 0; i < n; i++)
+    {
+
+        // Stars
+        for (int j = 0; j <= i; j++)
+        {
+            cout << "*";
+        }
+        // Spaces
+        for (int k = 0; k < 2 * (n - i - 1); k++)
+        {
+            cout << " ";
+        }
+        // Stars
+        for (int l = 0; l <= i; l++)
+        {
+            cout << "*";
+        }
+        cout << endl;
+    }
+
+    for (int i = 1; i < n; i++)
+    {
+        // Stars
+        for (int j = 1; j <= n - i; j++)
+        {
+            cout << "*";
+        }
+        // Spaces
+        for (int k = 0; k < 2 * i - 1; k++)
+        {
+            cout << " ";
+        }
+        // Stars
+        for (int l = 0; l <= n - i; l++)
+        {
+            cout << "*";
+        }
+        cout << endl;
+    }
+}
+void printP201(int n)
+{
+    int spaces = 2 * n - 2;
+    for (int i = 1; i <= 2 * n - 1; i++)
+    {
+        int stars = i;
+        if (i > n)
+            stars = 2 * n - i;
+        // Stars
+        for (int j = 0; j < stars; j++)
+        {
+            cout << "*";
+        }
+        // Spaces
+        for (int k = 0; k <= spaces; k++)
+        {
+            cout << " ";
+        }
+        // Stars
+        for (int l = 0; l < stars; l++)
+        {
+            cout << "*";
+        }
+        cout << endl;
+        if (i < n)
+            spaces -= 2;
+        else
+            spaces += 2;
+    }
+}
+void printP21(int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        // Stars
+        for (int j = 0; j < n; j++)
+        {
+            // Spaces
+            // Short circuiting
+            if (i == 0 || j == 0 || i == n - 1 || j == n - 1)
+                cout << "*";
+
+            else
+                cout << " ";
         }
         cout << endl;
     }
@@ -332,15 +544,17 @@ int main()
     int t;
     cin >> t;
 
-    for (int i = 0; i < t; i++) {
+    for (int i = 0; i < t; i++)
+    {
         // Test Cases
         int n;
         cin >> n;
-        printP17(n);
+        printP21(n);
     }
     return 0;
 }
 
 /* char ch = 'A';
     cout << char(ch + 1) << endl;
-    cout << char(char(65) + 1); */
+    cout << char(char(65) + 1);
+*/

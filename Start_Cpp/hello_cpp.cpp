@@ -538,6 +538,20 @@ void printP21(int n)
         cout << endl;
     }
 }
+void printP22(int n)
+{
+    for (int i = 0; i < 2*n-1; i++)
+    {
+        for(int j=0; j<2*n-1; j++) {
+            int top = i;
+            int left = j;
+            int right = (2*n - 2) - j;
+            int bottom = (2*n - 2) - i;
+            cout << n - min(min(top, bottom), min(left, right));
+        }
+        cout << endl;
+    }
+} 
 
 int main()
 {
@@ -549,7 +563,7 @@ int main()
         // Test Cases
         int n;
         cin >> n;
-        printP21(n);
+        printP22(n);
     }
     return 0;
 }

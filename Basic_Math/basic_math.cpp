@@ -66,6 +66,67 @@ void all_divisions(int n)
         }
     }
 }
+vector<int> all_divisions2(int n)
+{
+    vector<int> ls;
+
+    for (int i = 1; i <= sqrt(n); i++)
+    {
+        if (n % i == 0)
+        {
+            ls.push_back(i);
+
+            if (n / i != i)
+            {
+                ls.push_back(n / i);
+            }
+        }
+    }
+    sort(ls.begin(), ls.end());
+    return ls;
+}
+bool isPrime(int n)
+{
+    int count = 0;
+    for (int i = 1; i <= sqrt(n); i++)
+    {
+        if (n % i == 0)
+        {
+            count++;
+
+            if (n / i != i)
+            {
+                count++;
+            }
+        }
+    }
+    if (count == 2)
+        return true;
+    return false;
+}
+int GCD(int n1, int n2)
+{
+    int gcd = 1;
+    for (int i = min(n1, n2); i > 1; i--)
+    {
+        if (n1 % i == 0 && n2 % i == 0)
+        {
+            gcd = i;
+            break;
+        }
+    }
+    return gcd;
+}
+int GCD1(int n1, int n2)
+{
+    while (n1 > 0 && n2 > 0)
+    {
+        if (n1 > n2) n1 = n1 % n2;
+        else n2 = n2 % n1;
+    }
+    if (n1 == 0) return n2;
+    return n1;
+}
 
 int main()
 {
@@ -75,12 +136,18 @@ int main()
     for (int i = 0; i < t; i++)
     {
         // Test Cases
-        int x;
-        cin >> x;
+        int n1;
+        int n2;
+        cin >> n1 >> n2;
 
-        // bool all_divisions = isArmstrongNumber(x);
-        all_divisions(x);
+        int gcd = GCD(n1, n2);
+        cout << gcd;
+
+        // C++ forEach loop
+        /* for (auto it : all_divisions)
+        {
+            cout << it << endl;
+        } */
     }
-
     return 0;
 }

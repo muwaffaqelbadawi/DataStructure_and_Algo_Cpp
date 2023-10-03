@@ -3,7 +3,8 @@ using namespace std;
 
 // print numbers from n to 1 using recursion and back_track
 
-void descending(int i, int n)
+void descending
+(int i, int n)
 {
     if (i > n)
         return;
@@ -22,39 +23,66 @@ int sumParameterized(int i, int sum)
 // Using in dynamic programming (dp)
 int sumFunctional(int n)
 {
-    if (n == 0)
-        return 0;
+    if (n == 0) return 0;
     return n + sumFunctional(n - 1);
 }
 long long factorial(int n)
 {
-    if (n == 0)
-        return 1;
+    if (n == 0) return 1;
     return n * factorial(n - 1);
 }
-
 void Reverse_Arr(int i, int Arr[], int n)
 {
-    if (i >= n/2)
-        return;
-    swap(Arr[i], Arr[n-i-1]);
-    Reverse_Arr(i+1, Arr, n);
+    if (i >= n / 2) return;
+
+
+    swap(Arr[i], Arr[n - i - 1]);
+    return Reverse_Arr(i + 1, Arr, n);
 }
+bool isStringPalindrome(int i, string &str)
+{
+    // second base case
+    if (i >= str.size() / 2) return true;
+
+    // first base case
+    if (str[i] != str[str.size() - i - 1]) return false;
+
+    // else go to the next call
+    return isStringPalindrome(i + 1, str);
+}
+int fib(int n) {
+    if(n <= 1) return n;
+
+    int last = fib(n - 1);
+    int slast = fib(n - 2);
+    return last + slast;
+}
+
+
+
 
 int main()
 {
-    int t;
-    cin >> t;
+    /* int t;
+    cin >> t; */
 
     int n;
     cin >> n;
-    int arr[n];
 
-    for (int i = 0; i < t; i++)
+    // string str;
+    // cin >> str;
+
+
+    int genFib = fib(n);
+    cout << genFib;
+
+    // cout << endl;
+
+    // for (int i = 0; i < n; i++) cout << str[i];
+
+    /* for (int i = 0; i < t; i++)
     {
-        for (int i = 0; i < n; i++) cin >> arr[i];
-        Reverse_Arr(0, arr, n);
-        for (int i = 0; i < n; i++) cout << arr[i] << " ";
-    }
+        
+    } */
     return 0;
 }

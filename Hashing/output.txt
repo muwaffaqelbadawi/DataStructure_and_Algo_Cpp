@@ -1,0 +1,6 @@
+2
+1
+3
+0
+1
+number with max frequency = 3

@@ -3,8 +3,7 @@ using namespace std;
 
 // print numbers from n to 1 using recursion and back_track
 
-void descending
-(int i, int n)
+void descending(int i, int n)
 {
     if (i > n)
         return;

@@ -11,20 +11,34 @@ bool ArraySorted(vector<int> &arr)
         else
         {
             return false;
-        }-=
+        }
     }
     return true;
 }
-
-int arraySortedOpt(vector<int> &arr) {
+int removeDuplicates(vector<int> &arr)
+{
     int i = 0;
-    for(int j=1; j<arr.size()-1; j++) {
-        if(arr[j] != arr[i]) {
-            arr[i+1] = arr[j];
+    for (int j = 1; j < arr.size() - 1; j++)
+    {
+        if (arr[j] != arr[i])
+        {
+            arr[i + 1] = arr[j];
             i++;
         }
     }
-    return i+1;
+    return i + 1;
+}
+
+void Reverse(vector<int> &arr, int start, int end)
+{
+    while (start <= end)
+    {
+        int temp = arr[start];
+        arr[start] = arr[end];
+        arr[end] = temp;
+        start++;
+        end--;
+    }
 }
 
 int main()

@@ -11,7 +11,7 @@ bool ArraySorted(vector<int> &arr)
         else
         {
             return false;
-        }
+        }-=
     }
     return true;
 }

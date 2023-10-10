@@ -39,8 +39,6 @@ void Reverse(vector<int> &arr, int start, int end)
         end--;
     }
 }
-
-
 // bitwise xor operator is the caret symbol ^
 int missingNumber(vector<int> &a, int N)
 {
@@ -55,6 +53,105 @@ int missingNumber(vector<int> &a, int N)
 
     return xor1 ^ xor2;
 }
+// in map key is it.first and value is it.second
+int getSingleElement(vector<int> &arr)
+{
+    map<long long, int> mpp;
+    int n = arr.size();
+    for (int i = 0; i < n; i++) mpp[arr[i]]++;
+    for (auto it : mpp) if(it.second == 1) return it.first;
+}
+int longestSubarrayWithSumK(vector<int> a, long long k)
+{
+    map<long long, int> preSumMap;
+    long long sum = 0;
+    int maxLen = 0;
+    for (int i = 0; i < a.size(); i++)
+    {
+        sum += a[i];
+        if (sum == k)
+        {
+            maxLen = max(maxLen, i + 1);
+        }
+
+        long long rem = sum - k;
+
+        if (preSumMap.find(rem) != preSumMap.end())
+        {
+            int len = i - preSumMap[rem];
+            maxLen = max(maxLen, len);
+        }
+
+        if (preSumMap.find(sum) == preSumMap.end())
+        {
+            preSumMap[sum] = i;
+        }
+    }
+    return maxLen;
+}
+void sortArray(vector<int>& arr, int n)
+{
+    // Everytime there's moving pointers use while loop
+    // In most of the cases better solution uses hashing in some way TC=N*LogN
+    int low = 0, mid = 0, high = n-1;
+    while(mid <= high) {
+        if(arr[mid] == 0) {
+            swap(arr[low], arr[mid]);
+            low++;
+            mid++;
+        }
+        else if(arr[mid] == 1) {
+            mid++;
+        }
+        else {
+            swap(arr[mid], arr[high]);
+            high--;
+        }
+    }
+}
+string read(int n, vector<int> book, int target)
+{
+    int left = 0, right = n-1;
+    sort(book.begin(), book.end());
+    while(left < right) {
+        int sum = book[left] + book[right];
+        if(sum == target) {
+            return "YES";
+        }
+        if(sum < target) left++;
+        else right--;
+    }
+    return "NO";
+}
+int getLongestSubarray(vector<int> &a, int k)
+{
+    map<long long, int> preSumMap;
+    long long sum = 0;
+    int maxLen = 0;
+    for (int i = 0; i < a.size(); i++)
+    {
+        sum += a[i];
+        if (sum == k)
+        {
+            maxLen = max(maxLen, i + 1);
+        }
+
+        long long rem = sum - k;
+
+        if (preSumMap.find(rem) != preSumMap.end())
+        {
+            int len = i - preSumMap[rem];
+            maxLen = max(maxLen, len);
+        }
+
+        if (preSumMap.find(sum) == preSumMap.end())
+        {
+            preSumMap[sum] = i;
+        }
+    }
+    return maxLen;
+}
+
 
 int main()
 {

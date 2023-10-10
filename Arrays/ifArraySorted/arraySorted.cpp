@@ -151,7 +151,23 @@ int getLongestSubarray(vector<int> &a, int k)
     }
     return maxLen;
 }
-
+int majorityElement(vector<int> v)
+{
+    map<int, int> mpp;
+    for (int i = 0; i < v.size(); i++)
+    {
+        // mark the elements with the time occurence
+        mpp[v[i]]++;
+    }
+    for (auto it : mpp)
+    {
+        if (it.second > (v.size() / 2))
+        {
+            return it.first;
+        }
+    }
+    return -1;
+}
 
 int main()
 {

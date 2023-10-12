@@ -58,8 +58,11 @@ int getSingleElement(vector<int> &arr)
 {
     map<long long, int> mpp;
     int n = arr.size();
-    for (int i = 0; i < n; i++) mpp[arr[i]]++;
-    for (auto it : mpp) if(it.second == 1) return it.first;
+    for (int i = 0; i < n; i++)
+        mpp[arr[i]]++;
+    for (auto it : mpp)
+        if (it.second == 1)
+            return it.first;
 }
 int longestSubarrayWithSumK(vector<int> a, long long k)
 {
@@ -89,21 +92,25 @@ int longestSubarrayWithSumK(vector<int> a, long long k)
     }
     return maxLen;
 }
-void sortArray(vector<int>& arr, int n)
+void sortArray(vector<int> &arr, int n)
 {
     // Everytime there's moving pointers use while loop
     // In most of the cases better solution uses hashing in some way TC=N*LogN
-    int low = 0, mid = 0, high = n-1;
-    while(mid <= high) {
-        if(arr[mid] == 0) {
+    int low = 0, mid = 0, high = n - 1;
+    while (mid <= high)
+    {
+        if (arr[mid] == 0)
+        {
             swap(arr[low], arr[mid]);
             low++;
             mid++;
         }
-        else if(arr[mid] == 1) {
+        else if (arr[mid] == 1)
+        {
             mid++;
         }
-        else {
+        else
+        {
             swap(arr[mid], arr[high]);
             high--;
         }
@@ -111,15 +118,19 @@ void sortArray(vector<int>& arr, int n)
 }
 string read(int n, vector<int> book, int target)
 {
-    int left = 0, right = n-1;
+    int left = 0, right = n - 1;
     sort(book.begin(), book.end());
-    while(left < right) {
+    while (left < right)
+    {
         int sum = book[left] + book[right];
-        if(sum == target) {
+        if (sum == target)
+        {
             return "YES";
         }
-        if(sum < target) left++;
-        else right--;
+        if (sum < target)
+            left++;
+        else
+            right--;
     }
     return "NO";
 }
@@ -168,25 +179,76 @@ int majorityElement(vector<int> v)
     }
     return -1;
 }
-int majorityElement(vector<int> v) {
-	int count = 0;
-	int el;
-	int n = v.size();
-	for(int i=0; i<n; i++) {
-		if(count == 0) {
-			count = 1;
-			el = v[i];
-		}
-		else if(v[i] == el) count++;
-		else count--;
-	}	
+int majorityElement(vector<int> v)
+{
+    int count = 0;
+    int el;
+    int n = v.size();
+    for (int i = 0; i < n; i++)
+    {
+        if (count == 0)
+        {
+            count = 1;
+            el = v[i];
+        }
+        else if (v[i] == el)
+            count++;
+        else
+            count--;
+    }
 
-	int count1 = 0;
-	for(int i=0; i<n; i++) {
-		if(v[i] == el) count1++;
-	}
-	if(count1 > (n / 2)) return el;
-	else return -1;
+    int count1 = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (v[i] == el)
+            count1++;
+    }
+    if (count1 > (n / 2))
+        return el;
+    else
+        return -1;
+}
+long long maxSubarraySum(vector<int> arr, int n)
+{
+    long long sum = 0, maxi = LONG_MIN;
+    int start = 0, ansStart = -1, ansEnd = -1;
+    for (int i = 0; i < n; i++)
+    {
+        if (sum = 0)
+            start = i;
+        sum += arr[i];
+
+        if (sum > maxi)
+        {
+            maxi = sum;
+            ansStart = start;
+            ansEnd = i;
+        }
+
+        if (sum < 0)
+        {
+            sum = 0;
+        }
+    }
+    if (maxi < 0)
+        return 0;
+    else
+        return maxi;
+}
+
+int bestTimeToBuyAndSellStock(vector<int> &prices)
+{
+    int mini = prices[0];
+    int profit = 0;
+    int cost = 0;
+    for (int i = 1; i < prices.size(); i++)
+    {
+        cost = prices[i] - mini;
+        // Maximize the cost
+        profit = max(profit, cost);
+        mini = min(mini, prices[i]);
+    }
+    return profit;
 }
 
 

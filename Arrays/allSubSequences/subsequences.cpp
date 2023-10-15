@@ -100,7 +100,6 @@ int countSubsequences(int ind, int s, int sum, vector<int> &arr, int n)
     return l + r;
 }
 
-
 void findCombination(int ind, int target, vector<int> &arr, vector<vector<int>> &ans, vector<int> &ds)
 {
     if (ind == arr.size())
@@ -123,8 +122,6 @@ void findCombination(int ind, int target, vector<int> &arr, vector<vector<int>> 
     // Not pick
     findCombination(ind + 1, target, arr, ans, ds);
 }
-
-
 vector<vector<int>> combinationSum(vector<int> &candidates, int target)
 {
     vector<vector<int>> ans;
@@ -133,6 +130,30 @@ vector<vector<int>> combinationSum(vector<int> &candidates, int target)
     return ans;
 }
 
+void findCombination(int ind, int target, vector<int> &arr, vector<vector<int>> &ans, vector<int> &ds)
+{
+    if (target == 0)
+    {
+        ans.push_back(ds);
+        return;
+    }
+    for (int i = ind; i < arr.size(); i++)
+    {
+        if (i > ind && arr[i] == arr[i - 1]) continue;
+        if (arr[i] > target) break;
+        ds.push_back(arr[i]);
+        findCombination(i + 1, target - arr[i], arr, ans, ds);
+        ds.pop_back();
+    }
+}
+vector<vector<int>> combinationSum2(vector<int> &candidates, int target)
+{
+    sort(candidates.begin(), candidates.end());
+    vector<vector<int>> ans;
+    vector<int> ds;
+    findCombination(0, target, candidates, ans, ds);
+    return ans;
+}
 
 
 
@@ -142,12 +163,14 @@ int main()
     int target = 7;
     vector<int> arr;
 
-    while (cin >> n) arr.push_back(n);
+    while (cin >> n)
+        arr.push_back(n);
     n = arr.size();
 
     vector<vector<int>> ans = combinationSum(arr, target);
 
-    for(auto it: ans) {
+    for (auto it : ans)
+    {
         // cout << it << " ";
     }
     return 0;

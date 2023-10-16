@@ -129,7 +129,7 @@ vector<vector<int>> combinationSum(vector<int> &candidates, int target)
     findCombination(0, target, candidates, ans, ds);
     return ans;
 }
-void findCombination(int ind, int target, vector<int> &arr, vector<vector<int>> &ans, vector<int> &ds)
+void findCombination1(int ind, int target, vector<int> &arr, vector<vector<int>> &ans, vector<int> &ds)
 {
     if (target == 0)
     {
@@ -138,8 +138,10 @@ void findCombination(int ind, int target, vector<int> &arr, vector<vector<int>> 
     }
     for (int i = ind; i < arr.size(); i++)
     {
-        if (i > ind && arr[i] == arr[i - 1]) continue;
-        if (arr[i] > target) break;
+        if (i > ind && arr[i] == arr[i - 1])
+            continue;
+        if (arr[i] > target)
+            break;
         ds.push_back(arr[i]);
         findCombination(i + 1, target - arr[i], arr, ans, ds);
         ds.pop_back();
@@ -156,26 +158,90 @@ vector<vector<int>> combinationSum2(vector<int> &candidates, int target)
 
 // Bit manipulation
 
+// Power Set
+vector<vector<int>> pwset(vector<int> v)
+{
+    int n = v.size();
+    vector<vector<int>> subsets;
 
+    for (int num = 0; num < pow(2, n); num++)
+    {
+        vector<int> sub;
+        for (int i = 0; i < n; i++)
+        {
+            if (num & (1 << i))
+            {
+                sub.push_back(v[i]);
+            }
+        }
+        subsets.push_back(sub);
+    }
+    return subsets;
+}
 
+// Genarating all substrings using power set
+vector<vector<char>> pwsetSubStrings(string str)
+{
+    int n = str.size();
+    vector<vector<char>> subStrings;
+
+    for (int num = 0; num < pow(2, n); num++)
+    {
+        vector<char> sub;
+        for (int i = 0; i < n; i++)
+        {
+            if (num & (1 << i))
+            {
+                sub.push_back(str[i]);
+            }
+        }
+        subStrings.push_back(sub);
+    }
+    return subStrings;
+}
+
+void printSubStrings(const vector<vector<char>> &subStrings)
+{
+    for (const auto &subString : subStrings)
+    {
+        for (const auto &num : subString)
+        {
+            cout << num << " ";
+        }
+        cout << endl;
+    }
+}
+
+void printSubsets(const vector<vector<int>> &subsets)
+{
+    for (const auto &subset : subsets)
+    {
+        for (const auto &num : subset)
+        {
+            cout << num << " ";
+        }
+        cout << endl;
+    }
+}
 
 
 
 int main()
 {
-    int n;
-    int target = 7;
-    vector<int> arr;
+    // int n;
+    string str;
+    cin >> str;
+    // int target = 7;
+    /* vector<int> arr;
 
     while (cin >> n)
-        arr.push_back(n);
-    n = arr.size();
-
-    vector<vector<int>> ans = combinationSum(arr, target);
-
-    for (auto it : ans)
     {
-        // cout << it << " ";
-    }
+        arr.push_back(n);
+    } */
+    // n = arr.size();
+
+    vector<vector<char>> result = pwsetSubStrings(str);
+    printSubStrings(result);
+
     return 0;
 }

@@ -129,7 +129,6 @@ vector<vector<int>> combinationSum(vector<int> &candidates, int target)
     findCombination(0, target, candidates, ans, ds);
     return ans;
 }
-
 void findCombination(int ind, int target, vector<int> &arr, vector<vector<int>> &ans, vector<int> &ds)
 {
     if (target == 0)
@@ -154,6 +153,11 @@ vector<vector<int>> combinationSum2(vector<int> &candidates, int target)
     findCombination(0, target, candidates, ans, ds);
     return ans;
 }
+
+// Bit manipulation
+
+
+
 
 
 

@@ -99,7 +99,6 @@ int countSubsequences(int ind, int s, int sum, vector<int> &arr, int n)
     int r = countSubsequences(ind + 1, s, sum, arr, n);
     return l + r;
 }
-
 void findCombination(int ind, int target, vector<int> &arr, vector<vector<int>> &ans, vector<int> &ds)
 {
     if (ind == arr.size())
@@ -129,7 +128,7 @@ vector<vector<int>> combinationSum(vector<int> &candidates, int target)
     findCombination(0, target, candidates, ans, ds);
     return ans;
 }
-void findCombination1(int ind, int target, vector<int> &arr, vector<vector<int>> &ans, vector<int> &ds)
+void findCombination2(int ind, int target, vector<int> &arr, vector<vector<int>> &ans, vector<int> &ds)
 {
     if (target == 0)
     {
@@ -138,6 +137,7 @@ void findCombination1(int ind, int target, vector<int> &arr, vector<vector<int>>
     }
     for (int i = ind; i < arr.size(); i++)
     {
+        // if this is not the first time to pick don't pick duplicates
         if (i > ind && arr[i] == arr[i - 1])
             continue;
         if (arr[i] > target)
@@ -155,16 +155,14 @@ vector<vector<int>> combinationSum2(vector<int> &candidates, int target)
     findCombination(0, target, candidates, ans, ds);
     return ans;
 }
-
-// Bit manipulation
-
 // Power Set
 vector<vector<int>> pwset(vector<int> v)
 {
     int n = v.size();
     vector<vector<int>> subsets;
 
-    for (int num = 0; num < pow(2, n); num++)
+    // for (int num = 0; num < pow(2, n); num++)
+    for (int num = 0; num < (1 << n); num++)
     {
         vector<int> sub;
         for (int i = 0; i < n; i++)
@@ -178,14 +176,14 @@ vector<vector<int>> pwset(vector<int> v)
     }
     return subsets;
 }
-
 // Genarating all substrings using power set
 vector<vector<char>> pwsetSubStrings(string str)
 {
     int n = str.size();
     vector<vector<char>> subStrings;
 
-    for (int num = 0; num < pow(2, n); num++)
+    // for (int num = 0; num < pow(2, n); num++)
+    for (int num = 0; num < (1 << n); num++)
     {
         vector<char> sub;
         for (int i = 0; i < n; i++)
@@ -199,7 +197,6 @@ vector<vector<char>> pwsetSubStrings(string str)
     }
     return subStrings;
 }
-
 void printSubStrings(const vector<vector<char>> &subStrings)
 {
     for (const auto &subString : subStrings)
@@ -211,7 +208,6 @@ void printSubStrings(const vector<vector<char>> &subStrings)
         cout << endl;
     }
 }
-
 void printSubsets(const vector<vector<int>> &subsets)
 {
     for (const auto &subset : subsets)
@@ -223,6 +219,87 @@ void printSubsets(const vector<vector<int>> &subsets)
         cout << endl;
     }
 }
+// Subset sum I
+void func(int ind, int sum, vector<int> &arr, int N, vector<int> &sumSubset)
+{
+    if (ind == N)
+    {
+        sumSubset.push_back(sum);
+        return;
+    }
+
+    // Pick the element
+    func(ind + 1, sum + arr[ind], arr, N, sumSubset);
+
+    // Not pick
+    func(ind + 1, sum, arr, N, sumSubset);
+}
+vector<int> subsetSums(vector<int> arr, int N)
+{
+    vector<int> sumSubset;
+    func(0, 0, arr, N, sumSubset);
+    sort(sumSubset.begin(), sumSubset.end());
+    return sumSubset;
+}
+// Subset sum II
+void findSubsets(int ind, vector<int> &nums, vector<int> ds, vector<vector<int>> &ans)
+{
+    ans.push_back(ds);
+    for (int i = ind; i < nums.size(); i++)
+    {
+        // if this is not the first time to pick don't pick duplicates
+        if (i > ind && nums[i] == nums[i - 1])
+            continue;
+        ds.push_back(nums[i]);
+        findSubsets(i + 1, nums, ds, ans);
+        ds.pop_back();
+    }
+}
+vector<vector<int>> subsetsWithDup(vector<int> &nums)
+{
+    vector<vector<int>> ans;
+    vector<int> ds;
+    sort(nums.begin(), nums.end());
+    findSubsets(0, nums, ds, ans);
+    return ans;
+}
+
+void recurPermute(vector<int> &ds, vector<int> &nums, vector<vector<int>> &ans, int freq[])
+{
+    // Base case
+    if (ds.size() == nums.size())
+    {
+        // the extra time of N
+        ans.push_back(ds);
+        return;
+    }
+    for (int i = 0; i < nums.size(); i++)
+    {
+        if (!freq[i])
+        {
+            ds.push_back(nums[i]);
+            freq[i] = 1;
+            recurPermute(ds, nums, ans, freq);
+            freq[i] = 0;
+            ds.pop_back();
+        }
+    }
+}
+vector<vector<int>> permute(vector<int> &nums)
+{
+    vector<vector<int>> ans;
+    vector<int> ds;
+    int freq[nums.size()];
+    // initialize freq arr with zeros
+    for (int i = 0; i < nums.size(); i++)
+        freq[i] = 0;
+    recurPermute(ds, nums, ans, freq);
+    return ans;
+}
+
+
+
+
 
 
 

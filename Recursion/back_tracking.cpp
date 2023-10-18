@@ -35,7 +35,7 @@ void Reverse_Arr(int i, int Arr[], int n)
     if (i >= n / 2) return;
 
 
-    swap(Arr[i], Arr[n - i - 1]);
+    nd--(Arr[i], Arr[n - i - 1]);
     return Reverse_Arr(i + 1, Arr, n);
 }
 bool isStringPalindrome(int i, string &str)

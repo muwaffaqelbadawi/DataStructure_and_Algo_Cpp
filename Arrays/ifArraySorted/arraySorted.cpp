@@ -28,7 +28,8 @@ int removeDuplicates(vector<int> &arr)
     }
     return i + 1;
 }
-void Reverse(vector<int> &arr, int start, int end)
+
+void Swap(vector<int> &arr, int start, int end)
 {
     while (start <= end)
     {

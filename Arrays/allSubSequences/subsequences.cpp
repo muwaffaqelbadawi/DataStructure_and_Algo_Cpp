@@ -296,21 +296,33 @@ vector<vector<int>> permute(vector<int> &nums)
     recurPermute(ds, nums, ans, freq);
     return ans;
 }
-
+void Reverse(vector<int> &arr, int start, int end)
+{
+    while (start <= end)
+    {
+        int temp = arr[start];
+        arr[start] = arr[end];
+        arr[end] = temp;
+        start++;
+        end--;
+    }
+}
 
 // Generating all permutations second approach
 void recurPermute2(int ind, vector<int> &nums, vector<vector<int>> &ans)
 {
     // Base case
-    if(ind == nums.size()) {
+    if (ind == nums.size())
+    {
         ans.push_back(nums);
         return;
     }
 
-    for(int i = ind; i < nums.size(); i++) {
-        swap(nums[ind], nums[i]);
+    for (int i = ind; i < nums.size(); i++)
+    {
+        Reverse(nums, ind, i);
         recurPermute2(ind + 1, nums, ans);
-        swap(nums[ind], nums[i]);
+        Reverse(nums, ind, i);
     }
 }
 
@@ -341,7 +353,7 @@ void printPermutations(const vector<vector<int>> &permutations)
     cout << endl;
 }
 
-/* void printPermutations(const vector<vector<int>> &permutations)
+void printPermutations1(const vector<vector<int>> &permutations)
 {
     for (const auto &permutee : permutations)
     {
@@ -351,27 +363,105 @@ void printPermutations(const vector<vector<int>> &permutations)
         }
         cout << endl;
     }
-} */
+}
+// Generate next permutation
+// STL Library
+vector<int> nextGeneratedPermutation(vector<int> &arr)
+{
+    next_permutation(arr.begin(), arr.end());
+    return arr;
+}
+
+
+vector<int> nextGreaterPermutation(vector<int> &arr)
+{
+    int ind = -1;
+    const int n = arr.size();
+
+    for (int i = n - 2; i >= 0; i--)
+    {
+        if (arr[i] < arr[i + 1])
+        {
+            ind = i;
+            break;
+        }
+    }
+
+    if (ind == -1)
+    {
+        reverse(arr.begin(), arr.end());
+        return arr;
+    }
+
+    for (int i = n - 1; i >= ind; i--)
+    {
+        if (arr[i] > arr[ind])
+        {
+            swap(arr[i], arr[ind]);
+            break;
+        }
+    }
+
+    reverse(arr.begin() + ind + 1, arr.end());
+    return arr;
+}
 
 
 
+vector<int> nextGreaterPermutation2(vector<int> &arr)
+{
+    int ind = -1;
+    const int n = arr.size();
+
+    for (int i = n - 2; i >= 0; i--)
+    {
+        if (arr[i] < arr[i + 1])
+        {
+            ind = i;
+            break;
+        }
+    }
+
+    if (ind == -1)
+    {
+        Reverse(arr, 0, n-1);
+        return arr;
+    }
+
+    for (int i = n - 1; i >= ind; i--)
+    {
+        if (arr[i] > arr[ind])
+        {
+            swap(arr[i], arr[ind]);
+            break;
+        }
+    }
+
+    Reverse(arr, ind + 1, n-1);
+    return arr;
+}
+void printNextGreaterPermutation(const vector<int> &nextPermute)
+{
+    for (const auto &num : nextPermute)
+    {
+        cout << num << " ";
+    }
+}
 
 int main()
 {
     int n;
-    /* string str;
-    cin >> str; */
-    // int target = 7;
     vector<int> arr;
-
     while (cin >> n)
     {
         arr.push_back(n);
     }
+    vector<int> result = nextGreaterPermutation(arr);
+    printNextGreaterPermutation(result);
+
+    // string str;
+    // cin >> str;
+    // int target = 7;
     // n = arr.size();
-
-    vector<vector<int>> result = permute2(arr);
-    printPermutations(result);
-
     return 0;
 }

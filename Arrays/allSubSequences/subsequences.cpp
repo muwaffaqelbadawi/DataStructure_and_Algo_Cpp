@@ -298,27 +298,80 @@ vector<vector<int>> permute(vector<int> &nums)
 }
 
 
+// Generating all permutations second approach
+void recurPermute2(int ind, vector<int> &nums, vector<vector<int>> &ans)
+{
+    // Base case
+    if(ind == nums.size()) {
+        ans.push_back(nums);
+        return;
+    }
 
+    for(int i = ind; i < nums.size(); i++) {
+        swap(nums[ind], nums[i]);
+        recurPermute2(ind + 1, nums, ans);
+        swap(nums[ind], nums[i]);
+    }
+}
+
+vector<vector<int>> permute2(vector<int> &nums)
+{
+    vector<vector<int>> ans;
+    recurPermute2(0, nums, ans);
+    return ans;
+}
+
+void printPermutations(const vector<vector<int>> &permutations)
+{
+    cout << "[";
+    for (size_t i = 0; i < permutations.size(); i++)
+    {
+        cout << "[";
+        for (size_t j = 0; j < permutations[i].size(); j++)
+        {
+            cout << permutations[i][j];
+            if (j != permutations[i].size() - 1)
+                cout << ",";
+        }
+        cout << "]";
+        if (i != permutations.size() - 1)
+            cout << ",";
+    }
+    cout << "]";
+    cout << endl;
+}
+
+/* void printPermutations(const vector<vector<int>> &permutations)
+{
+    for (const auto &permutee : permutations)
+    {
+        for (const auto &num : permutee)
+        {
+            cout << num << " ";
+        }
+        cout << endl;
+    }
+} */
 
 
 
 
 int main()
 {
-    // int n;
-    string str;
-    cin >> str;
+    int n;
+    /* string str;
+    cin >> str; */
     // int target = 7;
-    /* vector<int> arr;
+    vector<int> arr;
 
     while (cin >> n)
     {
         arr.push_back(n);
-    } */
+    }
     // n = arr.size();
 
-    vector<vector<char>> result = pwsetSubStrings(str);
-    printSubStrings(result);
+    vector<vector<int>> result = permute2(arr);
+    printPermutations(result);
 
     return 0;
 }

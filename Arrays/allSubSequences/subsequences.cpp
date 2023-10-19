@@ -1,6 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Custom Reverse Function
+void Reverse(vector<int> &arr, int start, int end)
+{
+    while (start <= end)
+    {
+        int temp = arr[start];
+        arr[start] = arr[end];
+        arr[end] = temp;
+        start++;
+        end--;
+    }
+}
+
 void allSubsequences(int ind, vector<int> &ds, vector<int> &arr, int n)
 {
     if (ind == n)
@@ -263,7 +276,6 @@ vector<vector<int>> subsetsWithDup(vector<int> &nums)
     findSubsets(0, nums, ds, ans);
     return ans;
 }
-
 void recurPermute(vector<int> &ds, vector<int> &nums, vector<vector<int>> &ans, int freq[])
 {
     // Base case
@@ -296,18 +308,6 @@ vector<vector<int>> permute(vector<int> &nums)
     recurPermute(ds, nums, ans, freq);
     return ans;
 }
-void Reverse(vector<int> &arr, int start, int end)
-{
-    while (start <= end)
-    {
-        int temp = arr[start];
-        arr[start] = arr[end];
-        arr[end] = temp;
-        start++;
-        end--;
-    }
-}
-
 // Generating all permutations second approach
 void recurPermute2(int ind, vector<int> &nums, vector<vector<int>> &ans)
 {
@@ -325,14 +325,12 @@ void recurPermute2(int ind, vector<int> &nums, vector<vector<int>> &ans)
         Reverse(nums, ind, i);
     }
 }
-
 vector<vector<int>> permute2(vector<int> &nums)
 {
     vector<vector<int>> ans;
     recurPermute2(0, nums, ans);
     return ans;
 }
-
 void printPermutations(const vector<vector<int>> &permutations)
 {
     cout << "[";
@@ -352,7 +350,6 @@ void printPermutations(const vector<vector<int>> &permutations)
     cout << "]";
     cout << endl;
 }
-
 void printPermutations1(const vector<vector<int>> &permutations)
 {
     for (const auto &permutee : permutations)
@@ -371,8 +368,6 @@ vector<int> nextGeneratedPermutation(vector<int> &arr)
     next_permutation(arr.begin(), arr.end());
     return arr;
 }
-
-
 vector<int> nextGreaterPermutation(vector<int> &arr)
 {
     int ind = -1;
@@ -405,9 +400,6 @@ vector<int> nextGreaterPermutation(vector<int> &arr)
     reverse(arr.begin() + ind + 1, arr.end());
     return arr;
 }
-
-
-
 vector<int> nextGreaterPermutation2(vector<int> &arr)
 {
     int ind = -1;
@@ -447,6 +439,177 @@ void printNextGreaterPermutation(const vector<int> &nextPermute)
         cout << num << " ";
     }
 }
+// Find the leader
+vector<int> superiorElements(vector<int> &a)
+{
+    // O(N)
+    vector<int> ans;
+    int maxi = INT_MIN;
+    int n = a.size();
+
+    // O(N)
+    for (int i = n - 1; i >= 0; i--)
+    {
+        if (a[i] > maxi)
+        {
+            ans.push_back(a[i]);
+        }
+        // keep track of the right max
+        maxi = max(maxi, a[i]);
+    }
+    // O(N Log N) in the worst case
+    sort(ans.begin(), ans.end());
+    return ans;
+}
+// Longest Successive Elements - Better solution
+int longestSuccessiveElements(vector<int> &a)
+{
+    const int n = a.size();
+    int lastSmaller = INT_MIN;
+    int cnt = 0;
+    int longest = 1;
+    if (n == 0) return 0;
+    sort(a.begin(), a.end());
+
+    for (int i = 0; i < n; i++)
+    {
+        if (a[i] - 1 == lastSmaller)
+        {
+            cnt++;
+            lastSmaller = a[i];
+        }
+        else if (lastSmaller != a[i])
+        {
+            cnt = 1;
+            lastSmaller = a[i];
+        }
+        longest = max(longest, cnt);
+    }
+    return longest;
+}
+// Longest Successive Elements - OP.
+int longestSuccessiveElements(vector<int> &a)
+{
+    const int n = a.size();
+    if (n == 0)
+        return 0;
+    int longest = 1;
+    unordered_set<int> st;
+    for (int i = 0; i < n; i++)
+    {
+        st.insert(a[i]);
+    }
+    for (const auto it : st)
+    {
+        if (st.find(it - 1) == st.end())
+        {
+            int cnt = 1;
+            int x = it;
+            while (st.find(x + 1) != st.end())
+            {
+                x += 1;
+                cnt += 1;
+            }
+            // Whatever ther's update
+            longest = max(longest, cnt);
+        }
+    }
+    return longest;
+}
+// Set Matrix Zeros - Better
+vector<vector<int>> zeroMatrix(vector<vector<int>> &matrix, int n, int m)
+{
+    int col[m] = {0};
+    int row[n] = {0};
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            if (matrix[i][j] == 0)
+            {
+                row[i] = 1;
+                col[j] = 1;
+            }
+        }
+    }
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            if (row[i] || col[j])
+            {
+                matrix[i][j] = 0;
+            }
+        }
+    }
+    return matrix;
+}
+
+// Set Matrix Zeros - OP.
+vector<vector<int>> zeroMatrix(vector<vector<int>> &matrix, int n, int m)
+{
+    // int col[m] = {0};  -> matrix[0][..]
+    // int row[n] = {0};  -> matrix[..][0]
+
+    int col0 = 1;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            if (matrix[i][j] == 0)
+            {
+                // mark the i-th row
+                matrix[i][0] = 0;
+                // mark j-th col
+                if (j != 0)
+                {
+                    matrix[0][j] = 0;
+                }
+
+                else
+                {
+                    col0 = 0;
+                }
+            }
+        }
+    }
+
+    for (int i = 1; i < n; i++)
+    {
+        for (int j = 1; j < m; j++)
+        {
+            if (matrix[i][j] != 0)
+            {
+                // check for col & row
+                if (matrix[0][j] == 0 || matrix[i][0] == 0)
+                {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+
+    if (matrix[0][0] == 0)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            matrix[0][j] = 0;
+        }
+    }
+
+    if (col0 == 0)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            matrix[i][0] = 0;
+        }
+    }
+    return matrix;
+}
+
+
+
+
 
 int main()
 {

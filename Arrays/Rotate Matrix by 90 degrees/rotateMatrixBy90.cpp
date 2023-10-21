@@ -129,7 +129,15 @@ int main()
     int n;
     cin >> n;
 
-    // initializ vector arr of n rows and n columns
+    vector<int> arr;
+
+    while(cin >> n)
+    {
+        arr.push_back(n);
+
+    }
+
+    /* // initializ vector arr of n rows and n columns
     vector<vector<int>> arr(n, vector<int>(n));
 
     for (int i = 0; i < n; i++)
@@ -142,9 +150,12 @@ int main()
                 cin >> arr[i][j];
             }
         }
-    }
+    } */
 
-    rotateMatrix(arr);
-    printMatrix(arr);
-    return 0;
+    int allsSubWithK = findAllSubarraysWithGivenSum(arr, 3);
+    cout << allsSubWithK;
+
+        // rotateMatrix(arr);
+        // printMatrix(arr);
+        return 0;
 }

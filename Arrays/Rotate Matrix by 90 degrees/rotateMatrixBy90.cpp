@@ -28,7 +28,7 @@ void rotateMatrix(vector<vector<int>> &mat)
             swap(mat[i][j], mat[j][i]);
         }
     }
-    
+
     // row mat [i]
     for (int i = 0; i < n; i++)
     {
@@ -36,10 +36,13 @@ void rotateMatrix(vector<vector<int>> &mat)
         // Reverse
         // TC---> O(N * N / 2)
         // use this function or the custom one
-        reverse(mat[i].begin(), mat[i].end());
+        // reverse(mat[i].begin(), mat[i].end());
+
+        // Custome Reverse function
+        Reverse(mat[i], 0, n - 1);
     }
 }
-
+// Print Matrix
 void printMatrix(const vector<vector<int>> &mat)
 {
     for (const auto &row : mat)
@@ -50,6 +53,75 @@ void printMatrix(const vector<vector<int>> &mat)
         }
         cout << endl;
     }
+}
+// Spiral Matrix
+vector<int> spiralMatrix(vector<vector<int>> &MATRIX)
+{
+    int n = MATRIX.size();
+    int m = MATRIX[0].size();
+    int left = 0, right = m - 1;
+    int top = 0, bottom = n - 1;
+    vector<int> ans;
+
+    while (top <= bottom && left <= right)
+    {
+        // right
+        // constant top
+        for (int i = left; i <= right; i++)
+        {
+            ans.push_back(MATRIX[top][i]);
+        }
+        top++;
+
+        // botom
+        // constant right
+        for (int i = top; i <= bottom; i++)
+        {
+            ans.push_back(MATRIX[i][right]);
+        }
+        right--;
+
+        if (top <= bottom)
+        {
+            // left
+            // constant botton
+            for (int i = right; i >= left; i--)
+            {
+                ans.push_back(MATRIX[bottom][i]);
+            }
+            bottom--;
+        }
+
+        if (left <= right)
+        {
+            // top
+            // constant left
+            for (int i = bottom; i >= top; i--)
+            {
+                ans.push_back(MATRIX[i][left]);
+            }
+            left++;
+        }
+    }
+    return ans;
+}
+// Count All Subarrays With Given Sum
+int findAllSubarraysWithGivenSum(vector<int> &arr, int k)
+{
+    map<int, int> mpp;
+    mpp[0] = 1;
+    int preSum = 0, cnt = 0;
+
+    // TC---> O(N * Log N)
+    // SC---> O(N)
+    for (int i = 0; i < arr.size(); i++)
+    {
+        preSum += arr[i];
+        int remove = preSum - k;
+        cnt += mpp[remove];
+        mpp[preSum]++;
+    }
+    return cnt;
 }
 
 int main()

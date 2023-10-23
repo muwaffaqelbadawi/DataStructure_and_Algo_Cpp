@@ -124,18 +124,96 @@ int findAllSubarraysWithGivenSum(vector<int> &arr, int k)
     return cnt;
 }
 
+
+// First approach
+// Find specific element of Pascal Triangle given row and col
+int nCr(int n, int r)
+{
+    long long res = 1;
+
+    // calculating nCr
+    for (int i = 1; i < r; i++)
+    {
+        res = res * (n - i);
+        res = res / (i + 1);
+    }
+    return (int)(res);
+}
+
+// Pascal Triangle first approach
+vector<vector<int>> pascalTriangle(int n)
+{
+    vector<vector<int>> ans;
+
+    // Store the entire pascal's triangle:
+    for (int row = 1; row <= n; row++)
+    {
+        vector<int> tempLst; // temporary list
+        for (int col = 1; col <= row; col++)
+        {
+            tempLst.push_back(nCr(row - 1, col - 1));
+        }
+        ans.push_back(tempLst);
+    }
+    return ans;
+}
+
+// Second approatch
+vector<int> generateRow(int row)
+{
+    long long ans = 1;
+    vector<int> ansRow;
+    for (int col = 1; col < row; col++)
+    {
+        ans = ans * (row - col);
+        ans = ans / (col);
+        ansRow.push_back(ans);
+    }
+    return ansRow;
+}
+
+// Pascal Triangle second approach
+vector<vector<int>> pascalTriangle(int N)
+{
+    vector<vector<int>> ans;
+    for (int i = 1; i <= N; i++)
+    {
+        ans.push_back(generateRow(i));
+    }
+    return ans;
+}
+
+
+
+
+void printPascalTriangle(const vector<vector<int>> &subsets)
+{
+    for (const auto &subset : subsets)
+    {
+        for (const auto &num : subset)
+        {
+            cout << num << " ";
+        }
+        cout << endl;
+    }
+}
+
 int main()
 {
     int n;
     cin >> n;
 
-    vector<int> arr;
+    vector<vector<int>> ans = pascalTriangle(n);
+    printPascalTriangle(ans);
+
+    /* vector<int> arr;
 
     while(cin >> n)
     {
         arr.push_back(n);
-
     }
+    
+    */
 
     /* // initializ vector arr of n rows and n columns
     vector<vector<int>> arr(n, vector<int>(n));
@@ -152,8 +230,8 @@ int main()
         }
     } */
 
-    int allsSubWithK = findAllSubarraysWithGivenSum(arr, 3);
-    cout << allsSubWithK;
+    // int allsSubWithK = findAllSubarraysWithGivenSum(arr, 3);
+    // cout << allsSubWithK;
 
         // rotateMatrix(arr);
         // printMatrix(arr);

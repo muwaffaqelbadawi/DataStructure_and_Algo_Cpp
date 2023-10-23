@@ -183,9 +183,6 @@ vector<vector<int>> pascalTriangle(int N)
     return ans;
 }
 
-
-
-
 void printPascalTriangle(const vector<vector<int>> &subsets)
 {
     for (const auto &subset : subsets)

@@ -123,8 +123,6 @@ int findAllSubarraysWithGivenSum(vector<int> &arr, int k)
     }
     return cnt;
 }
-
-
 // First approach
 // Find specific element of Pascal Triangle given row and col
 int nCr(int n, int r)
@@ -139,7 +137,6 @@ int nCr(int n, int r)
     }
     return (int)(res);
 }
-
 // Pascal Triangle first approach
 vector<vector<int>> pascalTriangle(int n)
 {
@@ -157,7 +154,6 @@ vector<vector<int>> pascalTriangle(int n)
     }
     return ans;
 }
-
 // Second approatch
 vector<int> generateRow(int row)
 {
@@ -171,7 +167,6 @@ vector<int> generateRow(int row)
     }
     return ansRow;
 }
-
 // Pascal Triangle second approach
 vector<vector<int>> pascalTriangle(int N)
 {
@@ -182,7 +177,6 @@ vector<vector<int>> pascalTriangle(int N)
     }
     return ans;
 }
-
 void printPascalTriangle(const vector<vector<int>> &subsets)
 {
     for (const auto &subset : subsets)
@@ -193,6 +187,65 @@ void printPascalTriangle(const vector<vector<int>> &subsets)
         }
         cout << endl;
     }
+}
+
+// Majority Element II
+vector<int> majorityElementII(vector<int> v)
+{
+    int cnt1 = 0, cnt2 = 0;
+    int el1 = INT_MIN, el2 = INT_MIN;
+    for (int i = 0; i < v.size(); i++)
+    {
+        if (cnt1 == 0 && v[i] != el2)
+        {
+            cnt1 = 1;
+            el1 = v[i];
+        }
+        else if (cnt2 == 0 && v[i] != el1)
+        {
+            cnt2 = 1;
+            el2 = v[i];
+        }
+        else if (el1 == v[i])
+        {
+            cnt1++;
+        }
+        else if (el2 == v[i])
+        {
+            cnt2++;
+        }
+        else
+        {
+            cnt1--;
+            cnt2--;
+        }
+    }
+    // Manual Check
+    vector<int> ls;
+    cnt1 = 0;
+    cnt2 = 0;
+    for (int i = 0; i < v.size(); i++)
+    {
+        if (el1 == v[i])
+        {
+            cnt1++;
+        }
+        if (el2 == v[i])
+        {
+            cnt2++;
+        }
+    }
+    int mini = (int)(v.size() / 3) + 1;
+    if (cnt1 >= mini)
+        {
+            ls.push_back(el1);
+        }
+    if (cnt2 >= mini)
+        {
+            ls.push_back(el2);
+        }
+    sort(ls.begin(), ls.end());
+    return ls;
 }
 
 int main()
@@ -209,7 +262,7 @@ int main()
     {
         arr.push_back(n);
     }
-    
+
     */
 
     /* // initializ vector arr of n rows and n columns
@@ -230,7 +283,7 @@ int main()
     // int allsSubWithK = findAllSubarraysWithGivenSum(arr, 3);
     // cout << allsSubWithK;
 
-        // rotateMatrix(arr);
-        // printMatrix(arr);
-        return 0;
+    // rotateMatrix(arr);
+    // printMatrix(arr);
+    return 0;
 }

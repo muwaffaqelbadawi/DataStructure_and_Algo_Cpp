@@ -42,6 +42,7 @@ void rotateMatrix(vector<vector<int>> &mat)
         Reverse(mat[i], 0, n - 1);
     }
 }
+
 // Print Matrix
 void printMatrix(const vector<vector<int>> &mat)
 {
@@ -54,6 +55,7 @@ void printMatrix(const vector<vector<int>> &mat)
         cout << endl;
     }
 }
+
 // Spiral Matrix
 vector<int> spiralMatrix(vector<vector<int>> &MATRIX)
 {
@@ -105,6 +107,7 @@ vector<int> spiralMatrix(vector<vector<int>> &MATRIX)
     }
     return ans;
 }
+
 // Count All Subarrays With Given Sum
 int findAllSubarraysWithGivenSum(vector<int> &arr, int k)
 {
@@ -123,6 +126,7 @@ int findAllSubarraysWithGivenSum(vector<int> &arr, int k)
     }
     return cnt;
 }
+
 // First approach
 // Find specific element of Pascal Triangle given row and col
 int nCr(int n, int r)
@@ -137,6 +141,7 @@ int nCr(int n, int r)
     }
     return (int)(res);
 }
+
 // Pascal Triangle first approach
 vector<vector<int>> pascalTriangle(int n)
 {
@@ -154,6 +159,7 @@ vector<vector<int>> pascalTriangle(int n)
     }
     return ans;
 }
+
 // Second approatch
 vector<int> generateRow(int row)
 {
@@ -167,8 +173,9 @@ vector<int> generateRow(int row)
     }
     return ansRow;
 }
+
 // Pascal Triangle second approach
-vector<vector<int>> pascalTriangle(int N)
+vector<vector<int>> pascalTriangle1(int N)
 {
     vector<vector<int>> ans;
     for (int i = 1; i <= N; i++)
@@ -248,7 +255,6 @@ vector<int> majorityElementII(vector<int> v)
     return ls;
 }
 
-
 // Three some - Brute
 vector<vector<int>> triplet(int n, vector<int> &arr)
 {
@@ -273,16 +279,28 @@ vector<vector<int>> triplet(int n, vector<int> &arr)
 }
 
 // Three some - Better Solution
-
-
-
-
-
-
-
-
-
-
+vector<vector<int>> triplet1(int n, vector<int> &arr)
+{
+    set<vector<int>> st;
+    for (int i = 0; i < n; i++)
+    {
+        set<int> hashset;
+        for (int j = i + 1; j < n; j++)
+        {
+            int third = -(arr[i] + arr[j]);
+            // chack if the element is exist in the set
+            if (hashset.find(third) != hashset.end())
+            {
+                vector<int> temp = {arr[i], arr[j], third};
+                sort(temp.begin(), temp.end());
+                st.insert(temp);
+            }
+            hashset.insert(arr[j]);
+        }
+    }
+    vector<vector<int>> ans(st.begin(), st.end());
+    return ans;
+}
 
 int main()
 {

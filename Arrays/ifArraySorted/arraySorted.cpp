@@ -15,6 +15,7 @@ bool ArraySorted(vector<int> &arr)
     }
     return true;
 }
+
 int removeDuplicates(vector<int> &arr)
 {
     int i = 0;
@@ -40,6 +41,7 @@ void Swap(vector<int> &arr, int start, int end)
         end--;
     }
 }
+
 // bitwise xor operator is the caret symbol ^
 int missingNumber(vector<int> &a, int N)
 {
@@ -54,17 +56,27 @@ int missingNumber(vector<int> &a, int N)
 
     return xor1 ^ xor2;
 }
+
 // in map key is it.first and value is it.second
 int getSingleElement(vector<int> &arr)
 {
     map<long long, int> mpp;
     int n = arr.size();
     for (int i = 0; i < n; i++)
+    {
         mpp[arr[i]]++;
+    }
+
     for (auto it : mpp)
+    {
         if (it.second == 1)
+        {
             return it.first;
+        }
+    }
 }
+
+// Better
 int longestSubarrayWithSumK(vector<int> a, long long k)
 {
     map<long long, int> preSumMap;
@@ -93,6 +105,7 @@ int longestSubarrayWithSumK(vector<int> a, long long k)
     }
     return maxLen;
 }
+
 void sortArray(vector<int> &arr, int n)
 {
     // Everytime there's moving pointers use while loop
@@ -117,6 +130,7 @@ void sortArray(vector<int> &arr, int n)
         }
     }
 }
+
 string read(int n, vector<int> book, int target)
 {
     int left = 0, right = n - 1;
@@ -135,6 +149,7 @@ string read(int n, vector<int> book, int target)
     }
     return "NO";
 }
+
 int getLongestSubarray(vector<int> &a, int k)
 {
     map<long long, int> preSumMap;
@@ -163,7 +178,8 @@ int getLongestSubarray(vector<int> &a, int k)
     }
     return maxLen;
 }
-int majorityElement(vector<int> v)
+
+int majorityElement1(vector<int> v)
 {
     map<int, int> mpp;
     for (int i = 0; i < v.size(); i++)
@@ -180,7 +196,8 @@ int majorityElement(vector<int> v)
     }
     return -1;
 }
-int majorityElement(vector<int> v)
+
+int majorityElement2(vector<int> v)
 {
     int count = 0;
     int el;
@@ -209,6 +226,7 @@ int majorityElement(vector<int> v)
     else
         return -1;
 }
+
 long long maxSubarraySum(vector<int> arr, int n)
 {
     long long sum = 0, maxi = LONG_MIN;
@@ -232,6 +250,7 @@ long long maxSubarraySum(vector<int> arr, int n)
     if (maxi < 0) return 0;
     else return maxi;
 }
+
 int bestTimeToBuyAndSellStock(vector<int> &prices)
 {
     int mini = prices[0];
@@ -270,16 +289,20 @@ vector<int> rearrangeArray(vector<int> &nums)
 
 int main()
 {
-    int n;
-    vector<int> arr;
+    // int n;
 
-    while (cin >> n)
-    {
-        arr.push_back(n);
-    }
+    vector<int> arr = {3, -3, 1, 1, 1};
 
-    int slargest = ArraySorted(arr);
-    cout << slargest;
+    // while (cin >> n)
+    // {
+    //     arr.push_back(n);
+    // }
+
+    // long long k;
+    // cin >> k;
+
+    int result = longestSubarrayWithSumK(arr, 3);
+    cout << result;
 
     return 0;
 }

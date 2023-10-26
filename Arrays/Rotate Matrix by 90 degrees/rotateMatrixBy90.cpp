@@ -123,12 +123,15 @@ int findAllSubarraysWithGivenSum(vector<int> &arr, int k)
         int remove = preSum - k;
         cnt += mpp[remove];
         mpp[preSum]++;
+
+        cout << cnt << endl;
     }
     return cnt;
 }
 
 // First approach
 // Find specific element of Pascal Triangle given row and col
+// Find all the combination
 int nCr(int n, int r)
 {
     long long res = 1;
@@ -184,6 +187,8 @@ vector<vector<int>> pascalTriangle1(int N)
     }
     return ans;
 }
+
+// Printing Pascal Triangle
 void printPascalTriangle(const vector<vector<int>> &subsets)
 {
     for (const auto &subset : subsets)
@@ -196,7 +201,7 @@ void printPascalTriangle(const vector<vector<int>> &subsets)
     }
 }
 
-// Majority Element II
+// Majority Element II (> floor(n / 3))
 vector<int> majorityElementII(vector<int> v)
 {
     int cnt1 = 0, cnt2 = 0;
@@ -255,8 +260,8 @@ vector<int> majorityElementII(vector<int> v)
     return ls;
 }
 
-// Three some - Brute
-vector<vector<int>> triplet(int n, vector<int> &arr)
+// Three Sum - Brute TC---> ~ O(n^3) Time Limit Exceeded
+vector<vector<int>> triplet1(int n, vector<int> &arr)
 {
     set<vector<int>> st;
     for (int i = 0; i < n; i++)
@@ -278,8 +283,8 @@ vector<vector<int>> triplet(int n, vector<int> &arr)
     return ans;
 }
 
-// Three some - Better Solution
-vector<vector<int>> triplet1(int n, vector<int> &arr)
+// Three Sum - Better Solution
+vector<vector<int>> triplet2(int n, vector<int> &arr)
 {
     set<vector<int>> st;
     for (int i = 0; i < n; i++)
@@ -302,22 +307,195 @@ vector<vector<int>> triplet1(int n, vector<int> &arr)
     return ans;
 }
 
+// 3 Sum - O.P.
+vector<vector<int>> triplet3(int n, vector<int> &arr)
+{
+    vector<vector<int>> ans;
+    sort(arr.begin(), arr.end());
+
+    for (int i = 0; i < n; i++)
+    {
+        if (i > 0 && arr[i] == arr[i - 1])
+        {
+            continue;
+        }
+
+        int j = i + 1;
+        int k = n - 1;
+
+        // as long as j less than k
+        while (j < k)
+        {
+            int sum = arr[i] + arr[j] + arr[k];
+
+            if (sum < 0)
+            {
+                j++;
+            }
+
+            else if (sum > 0)
+            {
+                k--;
+            }
+
+            else
+            {
+                vector<int> temp = {arr[i], arr[j], arr[k]};
+                ans.push_back(temp);
+                j++;
+                k--;
+
+                while (j < k && arr[j] == arr[j - 1])
+                {
+                    j++;
+                }
+
+                while (j < k && arr[k] == arr[k + 1])
+                {
+                    k--;
+                }
+            }
+        }
+    }
+    return ans;
+}
+
+// 4 Sum - Brute
+vector<vector<int>> fourSum1(vector<int> &nums, int target)
+{
+    int n = nums.size();
+    set<vector<int>> st;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            for (int k = 0; k < n; k++)
+            {
+                for (int l = 0; l < n; l++)
+                {
+                    long long sum = nums[i] + nums[j];
+                    sum += nums[k];
+                    sum += nums[l];
+                    if (sum == target)
+                    {
+                        vector<int> temp = {nums[i], nums[j], nums[k], nums[l]};
+                        sort(temp.begin(), temp.end());
+                        st.insert(temp);
+                    }
+                }
+            }
+        }
+    }
+    vector<vector<int>> ans(st.begin(), st.end());
+    return ans;
+}
+
+// 4 Sum - Better
+vector<vector<int>> fourSum2(vector<int> &nums, int target)
+{
+    int n = nums.size();
+    set<vector<int>> st;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            set<long long> hashset;
+            for (int k = j + 1; k < n; k++)
+            {
+                long long sum = nums[i] + nums[j];
+                sum += nums[k];
+
+                long long fourth = target - (sum);
+                if (hashset.find(fourth) != hashset.end())
+                {
+                    vector<int> temp = {nums[i], nums[j], nums[k], (int)(fourth)};
+                    sort(temp.begin(), temp.end());
+                    st.insert(temp);
+                }
+                hashset.insert(nums[k]);
+            }
+        }
+    }
+    vector<vector<int>> ans(st.begin(), st.end());
+    return ans;
+}
+
+// 4 Sum - O.P.
+vector<vector<int>> fourSum(vector<int> &nums, int target)
+{
+    int n = nums.size();
+    vector<vector<int>> ans;
+    sort(nums.begin(), nums.end());
+
+    for (int i = 0; i < n; i++)
+    {
+        if (i > 0 && nums[i] == nums[i - 1])
+            continue;
+        for (int j = i + 1; j < n; j++)
+        {
+            if (j != i + 1 && nums[j] == nums[j - 1])
+                continue;
+            int k = i + 1;
+            int l = n - 1;
+            while (k < l)
+            {
+                long long sum = nums[i];
+                sum += nums[j];
+                sum += nums[k];
+                sum += nums[l];
+                if (sum == target)
+                {
+                    vector<int> temp = {nums[i], nums[j], nums[k], nums[l]};
+                    ans.push_back(temp);
+                    k++;
+                    l--;
+
+                    while (k < l && nums[k] == nums[k - 1])
+                    {
+                        k++;
+                    }
+
+                    while (k < l && nums[l] == nums[l + 1])
+                    {
+                        l--;
+                    }
+                }
+
+                else if (sum < target)
+                {
+                    k++;
+                }
+
+                else
+                {
+                    l--;
+                }
+            }
+        }
+    }
+    return ans;
+}
+
+
+
+
+
+
 int main()
 {
     int n;
-    cin >> n;
-
-    vector<vector<int>> ans = pascalTriangle(n);
-    printPascalTriangle(ans);
-
-    /* vector<int> arr;
+    vector<int> arr;
 
     while(cin >> n)
     {
         arr.push_back(n);
     }
 
-    */
+    int allsSubWithK = findAllSubarraysWithGivenSum(arr, 3);
+    // cout << allsSubWithK;
+
+    // vector<vector<int>> ans = pascalTriangle(n);
+    // printPascalTriangle(ans);
 
     /* // initializ vector arr of n rows and n columns
     vector<vector<int>> arr(n, vector<int>(n));
@@ -334,8 +512,7 @@ int main()
         }
     } */
 
-    // int allsSubWithK = findAllSubarraysWithGivenSum(arr, 3);
-    // cout << allsSubWithK;
+    
 
     // rotateMatrix(arr);
     // printMatrix(arr);

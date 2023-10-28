@@ -111,20 +111,20 @@ vector<int> spiralMatrix(vector<vector<int>> &MATRIX)
 // Count All Subarrays With Given Sum
 int findAllSubarraysWithGivenSum(vector<int> &arr, int k)
 {
+    int preSum = 0;
+    int cnt = 0;
     map<int, int> mpp;
-    mpp[0] = 1;
-    int preSum = 0, cnt = 0;
+    mpp[preSum]++;
 
     // TC---> O(N * Log N)
     // SC---> O(N)
+    
     for (int i = 0; i < arr.size(); i++)
     {
         preSum += arr[i];
         int remove = preSum - k;
         cnt += mpp[remove];
         mpp[preSum]++;
-
-        cout << cnt << endl;
     }
     return cnt;
 }
@@ -475,6 +475,25 @@ vector<vector<int>> fourSum(vector<int> &nums, int target)
     }
     return ans;
 }
+
+// Find all subarrays with XOR K
+int subarraysWithXORK(vector<int> arr, int k)
+{
+    int frontXOR = 0;
+    int cnt = 0;
+    map<int, int> mpp;
+    mpp[frontXOR]++; // Initially {0, 1}
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        frontXOR ^= arr[i];
+        int x = frontXOR ^ k;
+        cnt += mpp[x];
+        mpp[frontXOR]++;
+    }
+    return cnt;
+}
+
 
 
 

@@ -150,30 +150,34 @@ string read(int n, vector<int> book, int target)
     return "NO";
 }
 
+
+// Find longest subarray with sum K
 int getLongestSubarray(vector<int> &a, int k)
 {
-    map<long long, int> preSumMap;
-    long long sum = 0;
+    map<long long, int> mpp;
+    long long preSum = 0;
     int maxLen = 0;
     for (int i = 0; i < a.size(); i++)
     {
-        sum += a[i];
-        if (sum == k)
+        preSum += a[i];
+        if (preSum == k)
         {
             maxLen = max(maxLen, i + 1);
         }
 
-        long long rem = sum - k;
+        long long rem = preSum - k;
 
-        if (preSumMap.find(rem) != preSumMap.end())
+        if (mpp.find(rem) != mpp.end())
         {
-            int len = i - preSumMap[rem];
+            int len = i - mpp[rem];
             maxLen = max(maxLen, len);
         }
 
-        if (preSumMap.find(sum) == preSumMap.end())
+        // Do not update the index of preSum if it already exist in the map
+        // Look as left as possible (we need to find longest subarray not shortest)
+        if (mpp.find(preSum) == mpp.end())
         {
-            preSumMap[sum] = i;
+            mpp[preSum] = i;
         }
     }
     return maxLen;
@@ -289,19 +293,17 @@ vector<int> rearrangeArray(vector<int> &nums)
 
 int main()
 {
-    // int n;
+    int n;
 
-    vector<int> arr = {3, -3, 1, 1, 1};
+    vector<int> arr;
+    
 
-    // while (cin >> n)
-    // {
-    //     arr.push_back(n);
-    // }
+    while (cin >> n)
+    {
+        arr.push_back(n);
+    }
 
-    // long long k;
-    // cin >> k;
-
-    int result = longestSubarrayWithSumK(arr, 3);
+    int result = getLongestSubarray(arr, 3);
     cout << result;
 
     return 0;

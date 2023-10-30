@@ -496,13 +496,24 @@ int subarraysWithXORK(vector<int> arr, int k)
 
 
 
-
-
-
+int inTheMap(map<int, int> mpp, int i)
+{
+    mpp[4] = 0;
+    int val = mpp[i];
+    return val;
+}
 
 int main()
 {
-    int n;
+
+    map<int, int> mpp;
+
+    int result = inTheMap(mpp, 7);
+    cout << result;
+
+    /* int n;
+
+
     vector<int> arr;
 
     while(cin >> n)
@@ -510,7 +521,7 @@ int main()
         arr.push_back(n);
     }
 
-    int allsSubWithK = findAllSubarraysWithGivenSum(arr, 3);
+    int allsSubWithK = findAllSubarraysWithGivenSum(arr, 3); */
     // cout << allsSubWithK;
 
     // vector<vector<int>> ans = pascalTriangle(n);

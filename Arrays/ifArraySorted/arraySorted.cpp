@@ -472,54 +472,143 @@ public:
     }
 };
 
-
-
-
-
-
-
-
-
-
-
-int main()
+// Find missing and repeating numbers - Better (Hashing)
+vector<int> findMissingRepeatingNumbers(vector<int> a)
 {
-
-    int T;
-    cin >> T;
-
-    while (T--)
+    int n = a.size();
+    int hashArr[n + 1] = {0};
+    for (int i = 0; i < n; i++)
     {
-        int n, m;
-        cin >> n >> m;
-
-        long long arr1[n], arr2[m];
-
-        for (int i = 0; i < n; i++)
-        {
-            cin >> arr1[i];
-        }
-
-        for (int i = 0; i < m; i++)
-        {
-            cin >> arr2[i];
-        }
-        Solution ob;
-        ob.merge(arr1, arr2, n, m);
-
-        for (int i = 0; i < n; i++)
-            cout << arr1[i] << " ";
-
-        for (int i = 0; i < m; i++)
-            cout << arr2[i] << " ";
-
-        cout << endl;
+        hashArr[a[i]]++;
     }
 
-    return 0;
+    int repeating = -1, missing = -1;
+
+    for (int i = 1; i <= n; i++)
+    {
+        if (hashArr[i] == 2)
+        {
+            repeating = i;
+        }
+
+        else if (hashArr[i] == 0)
+        {
+            missing = i;
+        }
+
+        if (repeating != -1 && missing != -1)
+        {
+            break;
+        }
+    }
+    return {repeating, missing};
 }
 
-// } Driver Code Ends
+// Find missing and repeating numbers - O.P. 1 (Mathematical approach)
+vector<int> findMissingRepeatingNumbers(vector<int> a)
+{
+    long long n = a.size();
+    // S - Sn = x - y
+    // S2 - S2N
+    long long SN = (n * (n + 1)) / 2;
+    long long S2N = (n * (n + 1) * (2 * n + 1)) / 6;
+    long long S = 0, S2 = 0;
+    for (int i = 0; i < n; i++)
+    {
+        S += a[i];
+        S2 += (long long)a[i] * (long long)a[i];
+    }
+    long long val1 = S - SN; // x - y
+    long long val2 = S2 - S2N;
+    val2 = val2 / val1; // x + y
+    long long x = (val1 + val2) / 2;
+    long long y = x - val1;
+    return {(int)x, (int)y};
+}
+
+// Find missing and repeating numbers - O.P. 2 (XOR method)
+vector<int> findMissingRepeatingNumbers(vector<int> a)
+{
+    long long n = a.size();
+    int XOR = 0;
+    for (int i = 0; i < n; i++)
+    {
+        XOR = XOR ^ a[i];
+        XOR = XOR ^ i + 1;
+    }
+
+    // Simple bit manipulation trick
+    int number = XOR & ~(XOR - 1);
+
+    /* int bitNo = 1;
+    while(1)
+    {
+        if((XOR & (1 << bitNo) != 0)
+        {
+            break;
+        }
+        bitNo++;
+    } */
+
+    int zero = 0;
+    int one = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        // Part of one's club
+        if ((a[i] & number) != 0)
+        {
+            one = one ^ a[i];
+        }
+
+        // Part of zero's club
+        else
+        {
+            zero = zero ^ a[i];
+        }
+    }
+
+    for (int i = 1; i <= n; i++)
+    {
+        // Part of one's club
+        if ((i & number) != 0)
+        {
+            one = one ^ i;
+        }
+
+        // Part of zero's club
+        else
+        {
+            zero = zero ^ i;
+        }
+    }
+
+    int cnt = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (a[i] == zero)
+        {
+            cnt++;
+        }
+    }
+
+    if (cnt == 2)
+    {
+        return {zero, one};
+    }
+
+    return {one, zero};
+}
+
+
+
+
+
+
+
+
+
 
 int main()
 {

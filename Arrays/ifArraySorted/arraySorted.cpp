@@ -601,6 +601,11 @@ vector<int> findMissingRepeatingNumbers(vector<int> a)
     return {one, zero};
 }
 
+// Count Number of Inversions
+
+
+
+
 
 
 

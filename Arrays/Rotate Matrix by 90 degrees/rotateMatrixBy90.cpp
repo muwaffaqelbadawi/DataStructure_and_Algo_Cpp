@@ -494,14 +494,20 @@ int subarraysWithXORK(vector<int> arr, int k)
     return cnt;
 }
 
-
-
 int inTheMap(map<int, int> mpp, int i)
 {
     mpp[4] = 0;
     int val = mpp[i];
     return val;
 }
+
+
+
+
+
+
+
+
 
 int main()
 {

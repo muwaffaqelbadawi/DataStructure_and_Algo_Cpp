@@ -505,7 +505,7 @@ vector<int> findMissingRepeatingNumbers(vector<int> a)
 }
 
 // Find missing and repeating numbers - O.P. 1 (Mathematical approach)
-vector<int> findMissingRepeatingNumbers(vector<int> a)
+vector<int> findMissingRepeatingNumbers1(vector<int> a)
 {
     long long n = a.size();
     // S - Sn = x - y
@@ -527,7 +527,7 @@ vector<int> findMissingRepeatingNumbers(vector<int> a)
 }
 
 // Find missing and repeating numbers - O.P. 2 (XOR method)
-vector<int> findMissingRepeatingNumbers(vector<int> a)
+vector<int> findMissingRepeatingNumbers2(vector<int> a)
 {
     long long n = a.size();
     int XOR = 0;

@@ -67,7 +67,7 @@ int getSingleElement(vector<int> &arr)
         mpp[arr[i]]++;
     }
 
-    for (auto it : mpp)
+    for(auto it : mpp)
     {
         if (it.second == 1)
         {
@@ -327,11 +327,11 @@ vector<vector<int>> mergeOverlappingIntervals(vector<vector<int>> &arr)
 }
 
 // Merge All Overlapping Intervals - O.P.
-vector<vector<int>> mergeOverlappingIntervals(vector<vector<int>> &arr)
+vector<vector<int> > mergeOverlappingIntervals(vector<vector<int> > &arr)
 {
     int n = arr.size();
     sort(arr.begin(), arr.end());
-    vector<vector<int>> ans;
+    vector<vector<int> > ans;
 
     for (int i = 0; i < n; i++)
     {
@@ -602,22 +602,26 @@ vector<int> findMissingRepeatingNumbers2(vector<int> a)
 }
 
 // Count Number of Inversions - (O.P. Merge Sort)
-int merge(vector<int> &arr, int low, int mid, int high) {
-    vector<int> temp; // temporary array
+int merge(vector<int> &arr, int low, int mid, int high)
+{
+    vector<int> temp;    // temporary array
     int left = low;      // starting index of left half of arr
-    int right = mid + 1;   // starting index of right half of arr
+    int right = mid + 1; // starting index of right half of arr
 
-    //storing elements in the temporary array in a sorted manner//
+    // storing elements in the temporary array in a sorted manner//
     int cnt = 0;
 
-    while (left <= mid && right <= high) {
-        if (arr[left] <= arr[right]) {
+    while (left <= mid && right <= high)
+    {
+        if (arr[left] <= arr[right])
+        {
             temp.push_back(arr[left]);
             left++;
         }
 
         // right is smaller
-        else {
+        else
+        {
             temp.push_back(arr[right]);
             cnt += (mid - left + 1);
             right++;
@@ -626,49 +630,120 @@ int merge(vector<int> &arr, int low, int mid, int high) {
 
     // if elements on the left half are still left //
 
-    while (left <= mid) {
+    while (left <= mid)
+    {
         temp.push_back(arr[left]);
         left++;
     }
 
     //  if elements on the right half are still left //
-    while (right <= high) {
+    while (right <= high)
+    {
         temp.push_back(arr[right]);
         right++;
     }
 
     // transfering all elements from temporary to arr //
-    for (int i = low; i <= high; i++) {
+    for (int i = low; i <= high; i++)
+    {
         arr[i] = temp[i - low];
     }
 
     return cnt;
 }
 
-int mergeSort(vector<int> &arr, int low, int high) {
+int mergeSort(vector<int> &arr, int low, int high)
+{
     int cnt = 0;
-    if (low >= high) return cnt;
-    int mid = (low + high) / 2 ;
-    cnt += mergeSort(arr, low, mid);  // left half
+    if (low >= high)
+        return cnt;
+    int mid = (low + high) / 2;
+    cnt += mergeSort(arr, low, mid);      // left half
     cnt += mergeSort(arr, mid + 1, high); // right half
-    cnt += merge(arr, low, mid, high);  // merging sorted halves
+    cnt += merge(arr, low, mid, high);    // merging sorted halves
     return cnt;
 }
 
-
-int numberOfInversions(vector<int>&a, int n) {
-    return  mergeSort(a, 0, n-1);
+int numberOfInversions(vector<int> &a, int n)
+{
+    return mergeSort(a, 0, n - 1);
 }
 
+// Reverse Pairs
+void mergeP(vector<int> &arr, int low, int mid, int high)
+{
+    vector<int> temp;    // temporary array
+    int left = low;      // starting index of left half of arr
+    int right = mid + 1; // starting index of right half of arr
 
+    // storing elements in the temporary array in a sorted manner//
 
+    while (left <= mid && right <= high)
+    {
+        if (arr[left] <= arr[right])
+        {
+            temp.push_back(arr[left]);
+            left++;
+        }
+        else
+        {
+            temp.push_back(arr[right]);
+            right++;
+        }
+    }
 
+    // if elements on the left half are still left //
 
+    while (left <= mid)
+    {
+        temp.push_back(arr[left]);
+        left++;
+    }
 
+    //  if elements on the right half are still left //
+    while (right <= high)
+    {
+        temp.push_back(arr[right]);
+        right++;
+    }
 
+    // transfering all elements from temporary to arr //
+    for (int i = low; i <= high; i++)
+    {
+        arr[i] = temp[i - low];
+    }
+}
 
+int countPairs(vector<int> &arr, int low, int mid, int high)
+{
+    int cnt = 0;
+    int right = mid + 1;
+    for (int i = low; i <= mid; i++)
+    {
+        while (right <= high && arr[i] > 2 * arr[right])
+            right++;
+        cnt += (right - (mid + 1));
+    }
+    return cnt;
+}
 
+int mergeSortP(vector<int> &arr, int low, int high)
+{
+    int cnt = 0;
+    if (low >= high)
+        return cnt;
+    int mid = (low + high) / 2;
+    cnt += mergeSort(arr, low, mid);      // left half
+    cnt += mergeSort(arr, mid + 1, high); // right half
+    cnt += countPairs(arr, low, mid, high);
+    merge(arr, low, mid, high); // merging sorted halves
+    return cnt;
+}
 
+int team(vector<int> &skill, int n)
+{
+    return mergeSort(skill, 0, n - 1);
+}
 
 
 int main()

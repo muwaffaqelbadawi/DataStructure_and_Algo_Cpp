@@ -745,6 +745,24 @@ int team(vector<int> &skill, int n)
     return mergeSort(skill, 0, n - 1);
 }
 
+// Maximum product of the subarray
+int subarrayWithMaxProduct(vector<int> &arr)
+{
+    int pre = 1, suff = 1;
+    int ans = INT_MIN;
+    int n = arr.size();
+    for (int i = 0; i < n; i++)
+    {
+        if (pre == 0)
+            pre = 1;
+        if (suff == 0)
+            suff = 1;
+        pre *= arr[i];
+        suff *= arr[n - i - 1];
+        ans = max(ans, max(pre, suff));
+    }
+    return ans;
+}
 
 int main()
 {

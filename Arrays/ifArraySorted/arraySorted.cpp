@@ -67,13 +67,14 @@ int getSingleElement(vector<int> &arr)
         mpp[arr[i]]++;
     }
 
-    for(auto it : mpp)
+    for (auto it : mpp)
     {
         if (it.second == 1)
         {
             return it.first;
         }
     }
+    return 0;
 }
 
 // Better
@@ -293,7 +294,7 @@ vector<int> rearrangeArray(vector<int> &nums)
 }
 
 // Merge All Overlapping Intervals - Brute
-vector<vector<int>> mergeOverlappingIntervals(vector<vector<int>> &arr)
+vector<vector<int>> mergeOverlappingIntervals1(vector<vector<int>> &arr)
 {
     int n = arr.size();
     sort(arr.begin(), arr.end());
@@ -327,11 +328,11 @@ vector<vector<int>> mergeOverlappingIntervals(vector<vector<int>> &arr)
 }
 
 // Merge All Overlapping Intervals - O.P.
-vector<vector<int> > mergeOverlappingIntervals(vector<vector<int> > &arr)
+vector<vector<int>> mergeOverlappingIntervals2(vector<vector<int>> &arr)
 {
     int n = arr.size();
     sort(arr.begin(), arr.end());
-    vector<vector<int> > ans;
+    vector<vector<int>> ans;
 
     for (int i = 0; i < n; i++)
     {
@@ -349,7 +350,7 @@ vector<vector<int> > mergeOverlappingIntervals(vector<vector<int> > &arr)
 }
 
 // Merge Two Sorted Arrays - Brure
-void merge(long long arr1[], long long arr2[], int n, int m)
+void merge1(long long arr1[], long long arr2[], int n, int m)
 {
     long long arr3[m + n];
     int left = 0;
@@ -396,7 +397,7 @@ void merge(long long arr1[], long long arr2[], int n, int m)
 }
 
 // Merge Two Sorted Arrays - O.P. 1
-void merge(long long arr1[], long long arr2[], int n, int m)
+void merge2(long long arr1[], long long arr2[], int n, int m)
 {
     int left = n - 1;
     int right = 0;
@@ -754,9 +755,15 @@ int subarrayWithMaxProduct(vector<int> &arr)
     for (int i = 0; i < n; i++)
     {
         if (pre == 0)
+        {
             pre = 1;
+        }
+
         if (suff == 0)
+        {
             suff = 1;
+        }
+
         pre *= arr[i];
         suff *= arr[n - i - 1];
         ans = max(ans, max(pre, suff));
@@ -766,16 +773,16 @@ int subarrayWithMaxProduct(vector<int> &arr)
 
 int main()
 {
-    int n;
+    // int n;
 
-    vector<int> arr;
+    vector<int> arr = {2,3,-2,4};
 
-    while (cin >> n)
-    {
-        arr.push_back(n);
-    }
+    // while (cin >> n)
+    // {
+    //     arr.push_back(n);
+    // }
 
-    int result = getLongestSubarray(arr, 3);
+    int result = subarrayWithMaxProduct(arr);
     cout << result;
 
     return 0;

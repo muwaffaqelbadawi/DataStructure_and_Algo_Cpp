@@ -1,4 +1,13 @@
 {
+  "code-runner.executorMap": {
+    "cpp": "g++ $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt.exe"
+  },
+
+  "[cpp]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+  },
+  "C_Cpp.default.cppStandard": "gnu++20",
+
   "files.associations": {
     ".bash_prompt": "shellscript",
     "iostream": "cpp",

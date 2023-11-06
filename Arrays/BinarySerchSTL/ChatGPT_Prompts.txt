@@ -1,0 +1,15 @@
+I have this code which is use C++ STL function lower_bound.
+Imagine I have a vector array called arr.
+Integer n as the input I'm looking for.
+I know lower_bound function returns an iterator pointing to the index of the item if found or the next greater if not found.
+I want you to explain to me why I need to subtract arr.begin() from the lower_bound function to get the index?
+
+Here is the code:
+
+// input
+int n;
+cin >> n;
+
+// Lower Bound
+vector<int> arr;
+int ind = lower_bound(arr.begin(), arr.end(), n) - arr.begin();

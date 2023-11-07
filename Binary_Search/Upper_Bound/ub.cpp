@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Implementation of Lower Bound
+// Implementation of Upper Bound
 int lb(vector<int> arr, int n, int x)
 {
     int low = 0, high = n - 1;

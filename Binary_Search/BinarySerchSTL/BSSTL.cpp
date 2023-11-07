@@ -42,13 +42,6 @@ int main()
     if(ind < n) cout << arr[ind];
     else cout << -1;
 
-
-
-
-
-
-
-
     /* // Binary Search
     vector<int> arr = {1, 4, 5, 8, 9};
     bool res = binary_search(arr.begin(), arr.end(), n); */

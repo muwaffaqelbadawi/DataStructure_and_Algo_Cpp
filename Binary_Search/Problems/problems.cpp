@@ -226,7 +226,110 @@ int count(vector<int> &arr, int n, int x)
     return ans.second - ans.first + 1;
 }
 
+// Search In Rotated Sorted Array
+int search(vector<int>& arr, int n, int k)
+{
+    int low = 0, high = n - 1;
+    while(low  <= high)
+    {
+        int mid = (low + high) / 2;
 
+        if(arr[mid] == k)
+        {
+            return mid;
+        }
+
+        if(arr[low] <= arr[mid])
+        {
+            // left sorted
+            if(arr[low] <= k && k <= arr[mid])
+            {
+                // eleminate the right half
+                high = mid - 1;
+            }
+
+            else
+            {
+                // eleminate the left half
+                low = mid + 1;
+            }
+        }
+
+        else
+        {
+            // right soerted
+            if(arr[mid] <= k && k <= arr[high])
+            {
+                // eleminate the right half
+                low = mid + 1;
+            }
+
+            else
+            {
+                // eleminate the left half
+                high = mid - 1;
+            }
+
+        }
+    }
+    return -1;
+}
+
+// Search In A Rotated Sorted Array II
+bool searchInARotatedSortedArrayII(vector<int> &arr, int k)
+{
+    int n = arr.size();
+    int low = 0, high = n - 1;
+
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+
+        if (arr[mid] == k)
+        {
+            return true;
+        }
+
+        if (arr[low] == arr[mid] && arr[mid] == arr[high])
+        {
+            low++, high--;
+            continue;
+        }
+
+        if (arr[low] <= arr[mid])
+        {
+            // left sorted
+            if (arr[low] <= k && k <= arr[mid])
+            {
+                // eleminate the right half
+                high = mid - 1;
+            }
+
+            else
+            {
+                // eleminate the left half
+                low = mid + 1;
+            }
+        }
+
+        else
+        {
+            // right soerted
+            if (arr[mid] <= k && k <= arr[high])
+            {
+                // eleminate the right half
+                low = mid + 1;
+            }
+
+            else
+            {
+                // eleminate the left half
+                high = mid - 1;
+            }
+        }
+    }
+    return false;
+}
 
 
 
@@ -237,9 +340,9 @@ int main()
     cin >> x;
 
     vector<int> arr = {3, 5, 8, 15, 19};
-    pair<int, int> result = getFloorAndCeil(arr, arr.size(), x);
-    cout << "Floor: " << result.first << endl;
-    cout << "Ceil: " << result.second << endl;
+    // pair<int, int> result = getFloorAndCeil(arr, arr.size(), x);
+    // cout << "Floor: " << result.first << endl;
+    // cout << "Ceil: " << result.second << endl;
 
     return 0;
 }

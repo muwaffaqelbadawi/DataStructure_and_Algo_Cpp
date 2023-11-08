@@ -331,8 +331,243 @@ bool searchInARotatedSortedArrayII(vector<int> &arr, int k)
     return false;
 }
 
+// Find Minimum in Rotated Sorted Array
+int findMin(vector<int> &arr)
+{
+    int n = arr.size();
+    int low = 0, high = n - 1, ans = INT_MAX;
 
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+        if (arr[low] <= arr[mid])
+        {
+            ans = min(ans, arr[low]);
+            low = mid + 1;
+        }
 
+        else
+        {
+            ans = min(ans, arr[mid]);
+            high = mid - 1;
+        }
+    }
+    return ans;
+}
+
+// Find Minimum in Rotated Sorted Array - Optimized
+int findMinOP(vector<int> &arr)
+{
+    int n = arr.size();
+    int low = 0, high = n - 1, ans = INT_MAX;
+
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+
+        if (arr[low] <= arr[high])
+        {
+            ans = min(ans, arr[low]);
+            break;
+        }
+
+        if (arr[low] <= arr[mid])
+        {
+            ans = min(ans, arr[low]);
+            low = mid + 1;
+        }
+
+        else
+        {
+            ans = min(ans, arr[mid]);
+            high = mid - 1;
+        }
+    }
+    return ans;
+}
+
+// Find the number of rotations
+int findKRotation(vector<int> &arr)
+{
+    int n = arr.size();
+    int low = 0, high = n - 1;
+    int ans = INT_MAX;
+    int index = -1;
+
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+
+        if (arr[low] <= arr[high])
+        {
+            if (arr[low] < ans)
+            {
+                index = low;
+                ans = arr[low];
+            }
+            break;
+        }
+
+        if (arr[low] <= arr[mid])
+        {
+            if (arr[low] < ans)
+            {
+                index = low;
+                ans = arr[low];
+            }
+            low = mid + 1;
+        }
+
+        else
+        {
+            if (arr[mid] < ans)
+            {
+                index = mid;
+                ans = arr[mid];
+            }
+            high = mid - 1;
+        }
+    }
+    return index;
+}
+
+// Single Element in a Sorted Array
+int singleNonDuplicate(vector<int> &arr)
+{
+    int n = arr.size();
+    int low = 1, high = n - 2;
+
+    if (n == 1)
+    {
+        return arr[0];
+    }
+
+    if (arr[0] != arr[1])
+    {
+        return arr[0];
+    }
+
+    if (arr[n - 1] != arr[n - 2])
+    {
+        return arr[n - 1];
+    }
+
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+        if (arr[mid] != arr[mid + 1] && arr[mid] != arr[mid - 1])
+        {
+            return arr[mid];
+        }
+
+        // left half
+        if ((mid % 2 == 1 && arr[mid] == arr[mid - 1]) || (mid % 2 == 0 && arr[mid] == arr[mid + 1]))
+        {
+            // eliminate the left half
+            low = mid + 1;
+        }
+
+        // if this is not the case
+        else
+        {
+            // eliminate the right half
+            high = mid - 1;
+        }
+    }
+    // dummy statement
+    return -1;
+}
+
+// Find Peak Element - version (1)
+int findPeakElement(vector<int> &arr)
+{
+    int n = arr.size();
+    int low = 1, high = n-2;
+    
+    if(n == 1)
+    {
+        return 0;
+    }
+
+    if(arr[0] > arr[1])
+    {
+        return 0;
+    }
+
+    if(arr[n-1] > arr[n-2])
+    {
+        return n-1;
+    }
+
+    while(low <= high)
+    {
+        int mid = (low + high) / 2;
+
+        if(arr[mid] > arr[mid-1] && arr[mid] > arr[mid+1])
+        {
+            return mid;
+        }
+
+        else if(arr[mid] > arr[mid-1])
+        {
+            low = mid + 1;
+        }
+        
+        else if(arr[mid] > arr[mid+1])
+        {
+            high = mid - 1;
+        }
+
+        else
+        {
+            low = mid + 1;
+        }
+    }
+    return -1;
+}
+
+// Find Peak Element - version (2)
+int findPeakElement(vector<int> &arr)
+{
+    int n = arr.size();
+    int low = 1, high = n-2;
+    
+    if(n == 1)
+    {
+        return 0;
+    }
+
+    if(arr[0] > arr[1])
+    {
+        return 0;
+    }
+
+    if(arr[n-1] > arr[n-2])
+    {
+        return n-1;
+    }
+
+    while(low <= high)
+    {
+        int mid = (low + high) / 2;
+
+        if(arr[mid] > arr[mid-1] && arr[mid] > arr[mid+1])
+        {
+            return mid;
+        }
+
+        else if(arr[mid] > arr[mid-1])
+        {
+            low = mid + 1;
+        }
+
+        else
+        {
+            high = mid - 1;
+        }
+    }
+    return -1;
+}
 
 int main()
 {

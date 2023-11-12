@@ -166,7 +166,126 @@ int minimumRateToEatBananas(vector<int> v, int h)
     return low;
 }
 
+// Minimum days to days to make m X k Bouques
+int maxiDay(vector<int> &arr)
+{
+    int maxi = INT_MIN;
+    int n = arr.size();
+    for (int i = 0; i < n; i++)
+    {
+        maxi = max(maxi, arr[i]);
+    }
+    return maxi;
+}
+int miniDay(vector<int> &arr)
+{
+    int mini = INT_MAX;
+    int n = arr.size();
+    for (int i = 0; i < n; i++)
+    {
+        mini = min(mini, arr[i]);
+    }
+    return mini;
+}
+bool Possible(vector<int> arr, int day, int m, int k)
+{
+    int cnt = 0;
+    int NoOfB = 0;
+    int n = arr.size();
 
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] <= day)
+        {
+            cnt++;
+        }
+
+        else
+        {
+            NoOfB += (cnt / k);
+            cnt = 0;
+        }
+    }
+    NoOfB += (cnt / k);
+    return NoOfB >= m;
+}
+int roseGarden(vector<int> arr, int k, int m)
+{
+    long long val = m * 1ll * k * 1ll;
+    int n = arr.size();
+
+    if (val > n)
+    {
+        return -1;
+    }
+
+    int low = miniDay(arr), high = maxiDay(arr);
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+
+        if (Possible(arr, mid, m, k))
+        {
+            high = mid - 1;
+        }
+
+        else
+        {
+            low = mid + 1;
+        }
+    }
+    return low;
+}
+
+// Find the smallest division
+int maxiNumber(vector<int> &arr)
+{
+    int maxi = INT_MIN;
+    int n = arr.size();
+    for (int i = 0; i < n; i++)
+    {
+        maxi = max(maxi, arr[i]);
+    }
+    return maxi;
+}
+int sum(vector<int> arr, int mid)
+{
+    int cnt = 0;
+    int divSum = 0;
+    int n = arr.size();
+
+    for (int i = 0; i < n; i++)
+    {
+        divSum += ceil((double)(arr[i]) / (double)(mid));
+    }
+    return divSum;
+}
+int smallestDivisor(vector<int> &arr, int limit)
+{
+    int n = arr.size();
+
+    if(n > limit)
+    {
+        return -1;
+    }
+
+    int low = 1, high = maxiNumber(arr);
+
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+        if (sum(arr, mid) <= limit)
+        {
+            high = mid - 1;
+        }
+
+        else
+        {
+            low = mid + 1;
+        }
+    }
+    return low;
+}
 
 
 main()

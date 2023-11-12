@@ -287,6 +287,91 @@ int smallestDivisor(vector<int> &arr, int limit)
     return low;
 }
 
+// Capacity to ship package
+int maxiLoad(vector<int> &weights)
+{
+    int maxi = INT_MIN;
+	int n = weights.size();
+    for(int i=0; i<n; i++)
+    {
+        maxi = max(maxi, weights[i]);
+    }
+    return  maxi;
+}
+int summation(vector<int> &weights)
+{
+    int sum = 0;
+    int n = weights.size();
+
+    for(int i=0; i<n; i++)
+    {
+        sum += weights[i];
+    }
+    return sum;
+}
+int func(vector<int> &weights, int d)
+{
+    int days = 1, load = 0;
+    int n = weights.size();
+
+    for(int i=0; i<n; i++)
+    {
+        if((load + weights[i]) > d)
+        {
+            days++;
+            load = weights[i];
+        }
+
+        else
+        {
+            load += weights[i];
+        }
+    }
+    return days;
+}
+int leastWeightCapacity(vector<int> &weights, int d)
+{
+    int low = *max_element(weights.begin(), weights.end());
+    int high = accumulate(weights.begin(), weights.end(), 0);
+
+    while(low <= high)
+    {
+        int mid = (low +high) / 2;
+        int daysReq = func(weights, mid);
+        
+        if(daysReq <= d)
+        {
+            high = mid - 1;
+        }
+
+        else
+        {
+            low = mid + 1;
+        }
+    }
+    return low;
+}
+
+// Find the Kth missing number
+int missingK(vector<int> vec, int n, int k)
+{
+    int low = 0, high = n - 1;
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+        int missing = vec[mid] - (mid + 1);
+        if (missing < k)
+        {
+            low = mid + 1;
+        }
+
+        else
+        {
+            high = mid - 1;
+        }
+    }
+    return low + k;
+}
 
 main()
 {

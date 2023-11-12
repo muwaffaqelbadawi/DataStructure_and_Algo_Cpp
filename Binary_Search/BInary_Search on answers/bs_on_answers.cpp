@@ -371,6 +371,7 @@ int missingK(vector<int> vec, int n, int k)
         }
     }
     return low + k;
+    // return high + k + 1
 }
 
 main()

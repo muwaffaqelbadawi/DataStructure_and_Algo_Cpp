@@ -376,6 +376,8 @@ int missingK(vector<int> vec, int n, int k)
 
 // Aggressive Cows
 // Can we place is a helper function
+// TC ---> O(N Log N) + [ O(Log2 (arr[n-1] - arr[0] + 1)) * O(N) ]
+// SC ---> O(1)
 bool canWePlace(vector<int> &stalls, int dist, int k)
 {
     // C1 will always be at first place
@@ -399,7 +401,6 @@ bool canWePlace(vector<int> &stalls, int dist, int k)
     }
     return false;
 }
-
 int aggressiveCows(vector<int> &stalls, int k)
 {
     sort(stalls.begin(), stalls.end());
@@ -422,6 +423,97 @@ int aggressiveCows(vector<int> &stalls, int k)
         }
     }
     return high;
+}
+
+
+// Books Allocation
+// n = number of pages
+// m = number of students
+int func(vector<int> &arr, int pages)
+{
+    int students = 1;
+    long long pagesStudent = 0;
+    int n = arr.size();
+
+    for(int i=0; i<n; i++)
+    {
+        if(pagesStudent + arr[i] <= pages)
+        {
+            // add pages to current student
+            pagesStudent += arr[i];
+        }
+
+        else
+        {
+            // add pages to the next student
+            students++;
+            pagesStudent = arr[i];
+        }
+    }
+    return students;
+}
+int findPages(vector<int>& arr, int n, int m) {
+    if(m > n)
+    {
+        return -1;
+    }
+
+    int low = *max_element(arr.begin(), arr.end());
+    int high = accumulate(arr.begin(), arr.end(), 0);
+
+    while(low <= high)
+    {
+        int mid = (low + high) / 2;
+        int students = func(arr, mid);
+
+        if(students > m)
+        {
+            low = mid + 1;
+        }
+
+        else
+        {
+            high = mid - 1;
+        }
+    }
+    return  low;
+}
+
+// Minimize Max Distance to Gas Station - Brute
+// k = number of gas stations to place
+long double minimiseMaxDistance(vector<int> &arr, int k)
+{
+    int n = arr.size();
+    vector<int> howMany(n - 1, 0);
+
+    for (int gasStations = 1; gasStations <= k; gasStations++)
+    {
+        long double maxSection = -1;
+        int maxIndex = -1;
+
+        for (int i = 0; i < n - 1; i++)
+        {
+            long double diff = arr[i + 1] - arr[i];
+            long double sectionLength = diff / ((long double)(howMany[i] + 1));
+
+            if (sectionLength > maxSection)
+            {
+                maxSection = sectionLength;
+                maxIndex = i;
+            }
+        }
+        // insert the current gas stwation
+        howMany[maxIndex]++;
+    }
+    long double maxAns = -1;
+
+    for (int i = 0; i < n - 1; i++)
+    {
+        long double diff = arr[i + 1] - arr[i];
+        long double sectionLength = diff / ((long double)(howMany[i] + 1));
+        maxAns = max(maxAns, sectionLength);
+    }
+    return maxAns;
 }
 
 main()

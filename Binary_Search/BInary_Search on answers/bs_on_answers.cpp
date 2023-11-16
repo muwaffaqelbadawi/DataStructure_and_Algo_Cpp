@@ -516,6 +516,44 @@ long double minimiseMaxDistance(vector<int> &arr, int k)
     return maxAns;
 }
 
+// Minimize Max Distance to Gas Station - Better (Optimized)
+// k = number of gas stations to place
+double minimiseMaxDistance(vector<int> &arr, int k){
+	int n = arr.size();
+	vector<int> howMany(n-1, 0);
+	priority_queue<pair<long double, int>> pq;
+
+    //insert the first n-1 elements into pq
+    //with respective distance values:
+	for(int i=0; i< n-1; i++)
+	{
+		pq.push({arr[i+1] - arr[i], i});
+	}
+
+	//Pick and place k gas stations:
+	for(int gasStations = 1; gasStations <= k; gasStations++)
+	{
+		//Find the maximum section
+        //and insert the gas station:
+		auto tp = pq.top();
+		pq.pop();
+		int sectionInd = tp.second;
+
+
+		// Insert the current gas station
+		howMany[sectionInd]++;
+
+        long double inidiff = arr[sectionInd + 1] - arr[sectionInd];
+        long double newSecLen = inidiff / (long double)(howMany[sectionInd] + 1);
+        pq.push({newSecLen, sectionInd});
+	    
+	}
+	return pq.top().first;
+}
+
+
+
+
 main()
 {
     int x;

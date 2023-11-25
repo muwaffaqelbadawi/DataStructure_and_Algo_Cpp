@@ -160,7 +160,7 @@ pair<int, int> firstAndLastPosition(vector<int> &arr, int n, int k)
 }
 
 // Number of occurrence
-int firstOccurrence(vector<int> &arr, int n, int k)
+int firstOccurrence1(vector<int> &arr, int n, int k)
 {
     int low = 0, high = n - 1;
     int first = -1;
@@ -185,7 +185,7 @@ int firstOccurrence(vector<int> &arr, int n, int k)
     }
     return first;
 }
-int lastOccurrence(vector<int> &arr, int n, int k)
+int lastOccurrence2(vector<int> &arr, int n, int k)
 {
     int low = 0, high = n - 1;
     int last = -1;
@@ -479,7 +479,7 @@ int singleNonDuplicate(vector<int> &arr)
 }
 
 // Find Peak Element - version (1)
-int findPeakElement(vector<int> &arr)
+int findPeakElement1(vector<int> &arr)
 {
     int n = arr.size();
     int low = 1, high = n-2;
@@ -527,7 +527,7 @@ int findPeakElement(vector<int> &arr)
 }
 
 // Find Peak Element - version (2)
-int findPeakElement(vector<int> &arr)
+int findPeakElement2(vector<int> &arr)
 {
     int n = arr.size();
     int low = 1, high = n-2;
@@ -571,10 +571,10 @@ int findPeakElement(vector<int> &arr)
 
 int main()
 {
-    int x;
-    cin >> x;
+    int x = 5;
+    cout << x;
 
-    vector<int> arr = {3, 5, 8, 15, 19};
+    // vector<int> arr = {3, 5, 8, 15, 19};
     // pair<int, int> result = getFloorAndCeil(arr, arr.size(), x);
     // cout << "Floor: " << result.first << endl;
     // cout << "Ceil: " << result.second << endl;

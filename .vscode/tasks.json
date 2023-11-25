@@ -2,26 +2,51 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "compile and run",
+      "label": "compile",
       "type": "shell",
       "command": "g++",
       "args": [
         "-std=c++20",
         "-o",
-        "${fileWorkspaceFolder}\\${relativeFileDirname}\\${fileBasenameNoExtension}.exe",
-        "${file}",
-        "&&",
-        "${fileWorkspaceFolder}\\${relativeFileDirname}\\${fileBasenameNoExtension}.exe",
-        "<",
-        "${fileWorkspaceFolder}\\${relativeFileDirname}\\input.txt",
-        ">",
-        "${fileWorkspaceFolder}\\${relativeFileDirname}\\output.txt"
+        "${fileWorkspaceFolder}/${relativeFileDirname}/${fileBasenameNoExtension}",
+        "${file}"
       ],
       "presentation": {
         "reveal": "silent",
         "revealProblems": "onProblem",
         "close": true
       },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+    },
+    {
+      "label": "compile and run",
+      "type": "shell",
+      "command": "./${fileWorkspaceFolder}/${relativeFileDirname}/${fileBasenameNoExtension}",
+      "args": [
+        "<",
+        "${fileWorkspaceFolder}/${relativeFileDirname}/input.txt",
+        ">",
+        "${fileWorkspaceFolder}/${relativeFileDirname}/output.txt"
+      ],
+      "presentation": {
+        "reveal": "silent",
+        "revealProblems": "onProblem",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "group": "build",
+      "dependsOn": "run",
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "type": "markdownlint",
+      "problemMatcher": ["$markdownlint"],
+      "label": "markdownlint: Lint all Markdown files in the workspace with markdownlint",
       "group": {
         "kind": "build",
         "isDefault": true

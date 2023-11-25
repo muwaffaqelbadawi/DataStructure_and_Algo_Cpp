@@ -91,7 +91,7 @@ int upperBound(vector<int> &arr, int n, int x)
     }
     return ans;
 }
-pair<int, int> firstAndLastPosition(vector<int> &arr, int n, int k)
+pair<int, int> firstAndLastPosition1(vector<int> &arr, int n, int k)
 {
     int lb = lowerBound(arr, n, k);
     if (lb == n || arr[lb] != k)
@@ -150,7 +150,7 @@ int lastOccurrence(vector<int> &arr, int n, int k)
     }
     return last;
 }
-pair<int, int> firstAndLastPosition(vector<int> &arr, int n, int k)
+pair<int, int> firstAndLastPosition2(vector<int> &arr, int n, int k)
 {
     int first = firstOccurrence(arr, n, k);
     if (first == -1)
@@ -569,9 +569,39 @@ int findPeakElement2(vector<int> &arr)
     return -1;
 }
 
+// Median of two sorted arrays
+double median(vector<int> &a, vector<int> &b)
+{
+    vector<int> c;
+    int n1 = a.size(), n2 = b.size();
+    int i = 0, j = 0;
+
+    while (i < n1 && j < n2)
+    {
+        if (a[i] < b[j])
+            c.push_back(a[i++]);
+        else
+            c.push_back(b[j++]);
+    }
+    while (i < n1)
+        c.push_back(a[i++]);
+    while (j < n2)
+        c.push_back(b[j++]);
+
+    int n = n1 + n2;
+    if (n % 2 == 1)
+    {
+        return (double)c[n / 2];
+    }
+
+    double median = ((double)c[n / 2] + (double)c[(n / 2) - 1]) / 2.0;
+    return median;
+}
+
+
 int main()
 {
-    int x = 5;
+    int x = 80;
     cout << x;
 
     // vector<int> arr = {3, 5, 8, 15, 19};

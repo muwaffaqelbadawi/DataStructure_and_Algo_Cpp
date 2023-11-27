@@ -72,6 +72,113 @@ bool searchMatrix(vector<vector<int>> &mat, int target)
 
 
 
+// Find Peak Element II
+int maxElement(vector<vector<int>> &mat, int n, int m, int col)
+{
+    int maxValue = -1;
+    int index = -1;
+    for(int i=0; i<n; i++)
+    {
+        if(mat[i][col] > maxValue)
+        {
+            maxValue = mat[i][col];
+            index = i;
+        }
+    }
+    return index;
+}
+vector<int> findPeakGrid(vector<vector<int>> &g){
+    int n = g.size();
+    int m = g[0].size();
+    int low = 0;
+    int high = m - 1;
+    while(low <= high)
+    {
+        int mid = (low + high) / 2;
+        int maxRowIndex = maxElement(g, n, m, mid);
+        int left = mid - 1 > 0 ? g[maxRowIndex][mid - 1] : -1;
+        int right = mid + 1 < m ? g[maxRowIndex][mid + 1] : -1;
+
+        if(g[maxRowIndex][mid] > left && g[maxRowIndex][mid] > right)
+        {
+            return {maxRowIndex, mid};
+        }
+
+        else if(g[maxRowIndex][mid] < left)
+        {
+            high = mid - 1;
+        }
+
+        else
+        {
+            low = mid + 1;
+        }
+    }
+    return {-1, -1};
+}
+
+
+
+// Median in a row-wise sorted Matrix
+int upperBound(vector<int> &arr, int x, int n)
+{
+    int low = 0, high = n - 1;
+    int ans = n;
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+        if (arr[mid] > x)
+        {
+            ans = mid;
+            high = mid - 1;
+        }
+
+        else
+        {
+            low = mid + 1;
+        }
+    }
+    return ans;
+}
+int countSmallerEqual(vector<vector<int>> &matrix, int n, int m, int x)
+{
+    int cnt = 0;
+    for (int i = 0; i < n; i++)
+    {
+        cnt += upperBound(matrix[i], x, m);
+    }
+    return cnt;
+}
+int median(vector<vector<int>> &matrix, int m, int n)
+{
+    int low = INT_MAX;
+    int high = INT_MIN;
+    n = matrix.size();
+    m = matrix[0].size();
+    for (int i = 0; i < n; i++)
+    {
+        low = min(low, matrix[i][0]);
+        high = max(high, matrix[i][m - 1]);
+    }
+
+    int req = (n * m) / 2;
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+        int smallerEquals = countSmallerEqual(matrix, n, m, mid);
+        if (smallerEquals <= req)
+        {
+            low = mid + 1;
+        }
+
+        else
+        {
+            high = mid - 1;
+        }
+    }
+    return low;
+}
+
 int main()
 {
 

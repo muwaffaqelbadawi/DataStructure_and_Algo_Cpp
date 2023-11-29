@@ -20,7 +20,6 @@ int sumParameterized(int i, int sum)
     return sumParameterized(i - 1, sum + i);
 }
 
-
 // Find sum of first n numbers using functional Recursion
 // Using in dynamic programming (dp)
 int sumFunctional(int n)
@@ -179,7 +178,11 @@ public:
     }
 };
 
-
+// Unique Pathth - Brute (Time Limit Exeeded)
+int uniquePaths(int m, int n) {
+	if(m == 1 || n == 1) return 1;
+	return uniquePaths(m - 1, n) + uniquePaths(m, n - 1); 
+}
 
 
 int main()

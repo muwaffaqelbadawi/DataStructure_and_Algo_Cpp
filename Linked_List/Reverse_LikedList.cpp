@@ -2,13 +2,25 @@
 using namespace std;
 
 // Introduction to Linked List
+
+
+// Creating a Node class
 class Node
 {
 public:
     int data;
     Node *next;
 
+// Constructor with both data and next node 
 public:
+    Node(int data1, Node* next1)
+    {
+        data = data1;
+        next = next1;
+    }
+
+public:
+    // Constructor with only data (assuming next is initially null)
     Node(int data1)
     {
         data = data1;
@@ -16,7 +28,8 @@ public:
     }
 };
 
-// TC ---> O(N)
+
+// convert a list to Linked List
 Node* convert2LL(vector<int> &arr)
 {
     Node* head = new Node(arr[0]);
@@ -31,137 +44,222 @@ Node* convert2LL(vector<int> &arr)
     return head;
 }
 
+// Print all the nodes
+Node* print(Node* head)
+{
+    while (head != NULL)
+    {
+        cout << head->data << " ";
+        head = head->next;
+    }
+    cout << endl;
+}
+
+// Print the length of a LL
 int lengthOfLL(Node* head)
 {
     int cnt = 0;
     Node *temp = head;
+
     while (temp)
     {
-        cout << temp->data << " ";
         temp = temp->next;
         cnt++;
     }
+
     return cnt;
 }
+
+// Search for item in a LL
+int searchItem(Node* head, int k)
+{
+    Node* temp = head;
+
+    while(temp)
+    {
+        if(temp->data == k) return 1;
+        temp = temp->next;
+    }
+    return 0;
+}
+
+// Delete a head of a LL
+Node* deleteHead(Node* head)
+{
+    if(head == NULL) return head;
+    Node* temp = head;
+    head = head->next;
+    delete temp;
+    return head;
+}
+
+// Delete a tale of a LL
+Node* deleteTale(Node* head)
+{
+    if(head == NULL || head->next == NULL) return NULL;
+
+    Node* temp = head;
+
+    while (temp->next->next != NULL)
+    {
+        temp = temp->next;
+    }
+
+    delete temp->next;
+    temp->next = nullptr;
+
+    return  head;
+}
+
+// Delete a Kth Node element (0-based indexing)
+Node *deleteNode(Node *head, int k)
+{
+    if (head == NULL) return head;
+
+    if (k == 0)
+    {
+        Node *temp = head;
+        head = head->next;
+        free(temp);
+        return head;
+    }
+
+    int cnt = 0;
+    Node *temp = head;
+    Node *prev = NULL;
+
+    while (temp != NULL)
+    {
+        cnt++;
+
+        if (cnt == k + 1)
+        {
+            prev->next = prev->next->next;
+            free(temp);
+            break;
+        }
+        prev = temp;
+        temp = temp->next;
+    }
+    return head;
+}
+
+// Delete an element
+Node *deleteEl(Node *head, int el)
+{
+    if (head == NULL) return head;
+
+    if (head->data == el)
+    {
+        Node *temp = head;
+        head = head->next;
+        free(temp);
+        return head;
+    }
+
+    Node *temp = head;
+    Node *prev = NULL;
+
+    while (temp != NULL)
+    {
+        if (temp->data == el)
+        {
+            prev->next = prev->next->next;
+            free(temp);
+            break;
+        }
+        prev = temp;
+        temp = temp->next;
+    }
+    return head;
+}
+
+// Insert at head
+Node* insertHead(Node* head, int val)
+{
+    Node* temp = new Node(val, head);
+    return temp;
+}
+
+// Insert at tail
+Node* insertTale(Node* head, int val)
+{
+    if(head == NULL) return new Node(val);
+
+    Node* temp = head;
+
+    while(temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+
+    Node* newNode = new Node(val);
+    temp->next = newNode;
+    
+    return head;
+}
+
+
+// Insert before Kth position
+Node* insertPos(Node* head, int el, int k)
+{
+    if(head == NULL)
+    {
+        if(k == 1) return new Node(el);
+        else return head;
+    }
+
+    if(k == 1) return new Node(el, head);
+    
+    int cnt = 0;
+    Node* temp = head;
+
+    while(temp != NULL)
+    {
+        cnt++;
+        if(cnt == k-1)
+        {
+            Node *x = new Node(el, temp->next);
+            temp->next = x;
+            break;
+        }
+
+        temp = temp->next;
+    }
+    return head;
+}
+
+// Insert before element
+Node* insertBeforeEl(Node* head, int el, int val)
+{
+    if (head == NULL) return NULL;
+
+    if (head->data == val) return new Node(el, head);
+
+    Node *temp = head;
+
+    while (temp->next != NULL)
+    {
+        if (temp->next->data == val)
+        {
+            Node *x = new Node(el, temp->next);
+            temp->next = x;
+            break;
+        }
+
+        temp = temp->next;
+    }
+    return head;
+}
+
+
+
 
 int main()
 {
     vector<int> arr = {12, 5, 8, 7};
     Node* head = convert2LL(arr);
-    Node* temp = head;
 
-    while(temp)
-    {
-        cout << lengthOfLL(head);
-        // cout << temp->data << " ";
-        // temp = temp->next;
-    }
+    head = insertBeforeEl(head, 100, 7);
+    print(head);
 }
-
-
-
-
-
-/*
-// Reverse a linked list
-struct ListNode {
-    int val;
-    ListNode *next;
-    ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(nullptr) {}
-    ListNode(int x, ListNode *next) : val(x), next(next) {}
-};
-class Solution
-{
-public:
-    ListNode *reverseList(ListNode *head)
-    {
-
-        // step 1
-        ListNode *prev_p = NULL;
-        ListNode *current_p = head;
-        ListNode *next_p;
-
-        // step 2
-        while (current_p)
-        {
-            next_p = next_p->next;
-            current_p->next = prev_p;
-
-            prev_p = current_p;
-            current_p = next_p;
-        }
-
-        // step 3
-        head = prev_p;
-        return head;
-    }
-};
-
-// Implement Queue using Stacks - leetcode
-class MyQueue
-{
-public:
-    // push element in queue
-    void push(int x)
-    {
-        // Pop out all elements from the stack input
-        while (!input.empty())
-        {
-            output.push(input.top());
-            input.pop();
-        }
-
-        // Insert the desired element in the stack input
-        cout << "The element pushed is " << x << endl;
-        input.push(x);
-
-        // Pop out elements from the stack output and push them into the stack input
-        while (!output.empty())
-        {
-            input.push(output.top());
-            output.pop();
-        }
-    }
-
-    // Pop the element from the Queue
-    int pop()
-    {
-        if (input.empty())
-        {
-            cout << "Stack is empty";
-            exit(0);
-        }
-        int val = input.top();
-        input.pop();
-        return val;
-    }
-
-    // Return the Topmost element from the Queue
-    int peek()
-    {
-        if (input.empty())
-        {
-            cout << "Stack is empty";
-            exit(0);
-        }
-        return input.top();
-    }
-
-    bool empty()
-    {
-        return input.empty();
-    }
-
-private:
-    stack<int> input, output;
-};
-
-// Implement Stack using Queues
-
-*/
-
-
-
-
-

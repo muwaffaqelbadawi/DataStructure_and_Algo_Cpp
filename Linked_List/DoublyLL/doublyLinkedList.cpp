@@ -215,7 +215,6 @@ void insertBeforeNode(Node* node, int val)
     node->back = newNode;
 }
 
-
 // Reverse a doubly LL
 Node* reverseDLL(Node* head)
 {

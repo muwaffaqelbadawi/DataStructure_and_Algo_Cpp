@@ -3,7 +3,6 @@ using namespace std;
 
 // Introduction to Linked List
 
-
 // Creating a Node class
 class Node
 {
@@ -199,7 +198,6 @@ Node* insertTale(Node* head, int val)
     return head;
 }
 
-
 // Insert before Kth position
 Node* insertPos(Node* head, int el, int k)
 {
@@ -251,8 +249,6 @@ Node* insertBeforeEl(Node* head, int el, int val)
     }
     return head;
 }
-
-
 
 
 int main()

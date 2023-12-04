@@ -1,14 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
 int main()
 {
-    int a, b, c;
-    cin >> a >> b >> c;
+    int n;
+    cin >> n;
 
-    if(a + b == c) cout << "correct";
-    else cout << "wrong";
+    // Top border
+    cout << "+";
+    for (int k = 0; k < n; k++) cout << "-";
+    cout << "+";
+    cout << endl;
+    
 
-
-    return 0;
+    // Middle Section
+    for (int i = 0; i < n; i++)
+    {
+        cout << "|";
+        for (int k = 0; k < n; k++) cout << " ";
+        cout << "|";
+        cout << endl;
+    }
+    
+    
+    // Bottom Border
+    cout << "+";
+    for (int k = 0; k < n; k++) cout << "-";
+    cout << "+";
+    cout << endl;
 };

@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>;
+#include <bits/stdc++.h>
 using namespace std;
 
 // Creating a Node class
@@ -88,6 +88,60 @@ Node *Adding2NumbersLL(Node *head1, Node* head2)
     return dummyNode->next;
 }
 
+// Odd Even Linked List - Brute
+Node* OddEvenLL(Node* head)
+{
+    if(head == NULL || head->next == NULL) return head;
+
+    vector<int> arr;
+    Node* temp = head;
+
+    while(temp != NULL && temp->next != NULL)
+    {
+        arr.push_back(temp->data);
+        temp = temp->next->next;
+    }
+    if(temp) arr.push_back(temp->data);
+
+    temp = head->next;
+    while(temp != NULL && temp->next != NULL)
+    {
+        arr.push_back(temp->data);
+        temp = temp->next->next;
+    }
+    if(temp) arr.push_back(temp->data);
+    
+    int i = 0;
+    temp = head;
+    while(temp != NULL)
+    {
+        temp->data = arr[i];
+        i++;
+        temp = temp->next;
+    }
+    return head;
+}
+
+// Odd Even Linked List - OP.
+Node *OddEvenLL(Node *head)
+{
+    if(head == NULL || head->next == NULL) return head;
+
+    Node* odd = head;
+    Node* even = head->next;
+    Node* evenHead = head->next;
+
+    while (even != NULL && even->next != NULL)
+    {
+       odd->next = odd->next->next; 
+       even->next = even->next->next;
+
+       odd = odd->next;
+       even = even->next;
+    }
+    odd->next = evenHead;
+    return head;
+}
 
 
 

@@ -1,8 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-// Implementing Priority Queue
-
 // Creation of Max Heap
 vector<int> createMaxHeap(const vector<int> &arr)
 {

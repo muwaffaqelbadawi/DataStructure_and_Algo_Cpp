@@ -1,10 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-// Implementing Priority Queue
-
 // Creation of Max Heap
-vector<int> createMaxHeap(const vector<int> &arr)
+vector<int> createMinHeap(const vector<int> &arr)
 {
     // Initialize heap array
     vector<int> heapArr;
@@ -37,7 +35,7 @@ vector<int> createMaxHeap(const vector<int> &arr)
         while(ind > 0)
         {
             // 0-based indexing
-            if(heapArr[ind] > heapArr[(ind-1)/2])
+            if(heapArr[ind] < heapArr[(ind-1)/2])
             {
                 swap(heapArr[ind], heapArr[(ind-1)/2]);
                 ind = (ind-1)/2;
@@ -54,7 +52,7 @@ int main()
 {
     vector<int> arr = {10, 20, 15, 30, 40};
 
-    vector<int> myHeap = createMaxHeap(arr);
+    vector<int> myHeap = createMinHeap(arr);
 
     for (const auto &element : myHeap)
     {

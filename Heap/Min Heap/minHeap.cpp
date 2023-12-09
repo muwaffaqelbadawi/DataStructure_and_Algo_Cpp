@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-// Creation of Max Heap
+// Creation of Min Heap
 vector<int> createMinHeap(const vector<int> &arr)
 {
     // Initialize heap array
@@ -13,7 +13,6 @@ vector<int> createMinHeap(const vector<int> &arr)
     // If arr is empty return empty heapArr
     if(arr.empty()) return heapArr;
 
-
     // If there's only one element it considers Max Heap or Min Heap
     if (arr.size() == 1)
     {
@@ -24,7 +23,7 @@ vector<int> createMinHeap(const vector<int> &arr)
     // Insert the first element
     heapArr.push_back(arr[0]);
 
-    // push all elements to heapArr
+    // push all elements to myHeap and maintaining the Heap property
     for (int i = 1; i < arr.size(); i++)
     {
         heapArr.push_back(arr[i]);
@@ -40,7 +39,6 @@ vector<int> createMinHeap(const vector<int> &arr)
                 swap(heapArr[ind], heapArr[(ind-1)/2]);
                 ind = (ind-1)/2;
             }
-
             else break;
         }
     }

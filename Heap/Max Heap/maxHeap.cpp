@@ -11,7 +11,10 @@ vector<int> createMaxHeap(const vector<int> &arr)
     heapArr.reserve(arr.size());
 
     // If arr is empty return empty heapArr
-    if(arr.empty()) return heapArr;
+    if(arr.empty())
+    {
+        return heapArr;
+    }
 
 
     // If there's only one element it considers Max Heap or Min Heap
@@ -24,7 +27,7 @@ vector<int> createMaxHeap(const vector<int> &arr)
     // Insert the first element
     heapArr.push_back(arr[0]);
 
-    // push all elements to heapArr
+    // push all elements to myHeap and maintaining the Heap property
     for (int i = 1; i < arr.size(); i++)
     {
         heapArr.push_back(arr[i]);
@@ -34,18 +37,48 @@ vector<int> createMaxHeap(const vector<int> &arr)
 
         while(ind > 0)
         {
-            // 0-based indexing
+            // 0-based index
             if(heapArr[ind] > heapArr[(ind-1)/2])
             {
                 swap(heapArr[ind], heapArr[(ind-1)/2]);
                 ind = (ind-1)/2;
             }
-
             else break;
         }
     }
     return heapArr;
 }
+
+// The height is defined as the length of the longest path from the root to a leaf.
+int measureHeightOfHeapStandard(const vector<int> &myHeap)
+{
+    // If the heap is empty, return height 0
+    if (myHeap.empty())
+    {
+        return 0;
+    }
+
+    // Initializing height
+    int height = 0;
+
+    // Starting from the root (index 0) and going downwards
+    int ind = 0;
+
+    // 0-based index
+    while (ind < myHeap.size())
+    {
+        height++;
+
+        // Move to the left child
+        ind = 2 * (ind + 1);
+    }
+    return height;
+}
+
+
+
+
+
 
 
 int main()
@@ -58,6 +91,10 @@ int main()
     {
         cout << element << " ";
     }
+
+    int heapHight = measureHeightOfHeapStandard(myHeap);
+
+    cout << endl << heapHight;
 
     return 0;
 }

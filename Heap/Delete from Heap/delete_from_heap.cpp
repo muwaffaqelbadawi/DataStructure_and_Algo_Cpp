@@ -24,7 +24,7 @@ vector<int> createMaxHeap(const vector<int> &arr)
     // Insert the first element
     heapArr.push_back(arr[0]);
 
-    // push all elements to heapArr
+    // push all elements to myHeap and maintaining the Heap property
     for (int i = 1; i < arr.size(); i++)
     {
         heapArr.push_back(arr[i]);
@@ -40,12 +40,23 @@ vector<int> createMaxHeap(const vector<int> &arr)
                 swap(heapArr[ind], heapArr[(ind-1)/2]);
                 ind = (ind-1)/2;
             }
-
             else break;
         }
     }
     return heapArr;
 }
+
+
+vector<int> deleteFromHeap(vector<int> myHeap)
+{
+    
+
+
+
+    return myHeap;
+}
+
+
 
 
 int main()

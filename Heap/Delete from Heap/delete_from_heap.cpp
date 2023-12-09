@@ -93,25 +93,29 @@ vector<int> deleteFromHeap(vector<int> heap)
     heap.pop_back();
 
     int ind = 0;
-    int parent = heap[ind];
-    int leftChild = heap[2 * (ind + 1)];
-    int rightChild = heap[2 * (ind + 2)];
     int heapHeight = measureHeapHeight(heap);
-    int secondLastLevel = pow(2, heapHeight) / 2;
+    int lastParentNode = pow(2, heapHeight) / 2;
 
-    while (max(leftChild, rightChild) > parent && ind <= secondLastLevel)
+    while (ind <= lastParentNode)
     {
-        if(leftChild > parent)
-        {
-            swap(parent, leftChild);
-        }
+        int leftChildIndex = 2 * ind + 1;
+        int rightChildIndex = 2 * ind + 2;
 
+        int leftChild = (leftChildIndex < heap.size()) ? heap[leftChildIndex] : INT_MIN;
+        int rightChild = (rightChildIndex < heap.size()) ? heap[rightChildIndex] : INT_MIN;
+
+        int swapIndex = (leftChild > rightChild) ? leftChildIndex : rightChildIndex;
+
+        // Check if swapping is needed
+        if (heap[ind] < heap[swapIndex])
+        {
+            swap(heap[ind], heap[swapIndex]);
+            ind = swapIndex;
+        }
         else
         {
-            swap(parent, rightChild);
+            break;
         }
-
-        ind = 2 * (ind + 1);
     }
     return heap;
 }
@@ -119,7 +123,7 @@ vector<int> deleteFromHeap(vector<int> heap)
 
 int main()
 {
-    vector<int> arr = {10, 20, 15, 30, 40};
+    vector<int> arr = {50, 30, 20, 15, 10, 8, 16};
 
     vector<int> myHeap = createMaxHeap(arr);
 

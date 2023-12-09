@@ -50,10 +50,10 @@ vector<int> createMaxHeap(const vector<int> &arr)
 }
 
 // The height is defined as the length of the longest path from the root to a leaf.
-int measureHeightOfHeapStandard(const vector<int> &myHeap)
+int measureHeapHeight(const vector<int> &heap)
 {
     // If the heap is empty, return height 0
-    if (myHeap.empty())
+    if (heap.empty())
     {
         return 0;
     }
@@ -65,7 +65,7 @@ int measureHeightOfHeapStandard(const vector<int> &myHeap)
     int ind = 0;
 
     // 0-based index
-    while (ind < myHeap.size())
+    while (ind < heap.size())
     {
         height++;
 
@@ -74,11 +74,6 @@ int measureHeightOfHeapStandard(const vector<int> &myHeap)
     }
     return height;
 }
-
-
-
-
-
 
 
 int main()
@@ -92,7 +87,7 @@ int main()
         cout << element << " ";
     }
 
-    int heapHight = measureHeightOfHeapStandard(myHeap);
+    int heapHight = measureHeapHeight(myHeap);
 
     cout << endl << heapHight;
 

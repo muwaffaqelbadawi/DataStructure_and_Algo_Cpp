@@ -46,30 +46,6 @@ vector<int> createMaxHeap(const vector<int> &arr)
     return heapArr;
 }
 
-int measureHeapHeight(const vector<int> &heap)
-{
-    // If the heap is empty, return height 0
-    if (heap.empty())
-    {
-        return 0;
-    }
-
-    // Initializing height
-    int height = 0;
-
-    // Starting from the root (index 0) and going downwards
-    int ind = 0;
-
-    while (ind < heap.size())
-    {
-        height++;
-
-        // Move to the left child (0-based index)
-        ind = 2 * (ind + 1);
-    }
-    return height;
-}
-
 vector<int> deleteFromHeap(vector<int> heap)
 {
     // If arr is empty return empty heapArr
@@ -92,9 +68,9 @@ vector<int> deleteFromHeap(vector<int> heap)
     // Remove last element (deepest leaf of the heap)
     heap.pop_back();
 
+    // Index of the root
     int ind = 0;
-    int heapHeight = measureHeapHeight(heap);
-    int lastParentNode = pow(2, heapHeight) / 2;
+    int lastParentNode = (heap.size() / 2) - 1;
 
     while (ind <= lastParentNode)
     {
@@ -112,6 +88,7 @@ vector<int> deleteFromHeap(vector<int> heap)
             swap(heap[ind], heap[swapIndex]);
             ind = swapIndex;
         }
+        
         else
         {
             break;

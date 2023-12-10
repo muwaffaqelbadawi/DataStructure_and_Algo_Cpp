@@ -1,44 +1,65 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main()
+vector<int> heapify(vector<int> &arr)
 {
-    int n;
-    cin >> n;
-    int arr[n];
+    // start with the last parent node
+    int ind = (arr.size() / 2) - 1;
 
-    // precompute
-    unordered_map<int, int> mpp;
-    for (int i = 0; i < n; i++)
+    // move upwards until the root
+    while (ind >= 0)
     {
-        cin >> arr[i];
-        mpp[arr[i]] += 1;
-    }
+        int leftChildIndex = 2 * ind + 1;
+        int rightChildIndex = 2 * ind + 2;
 
+        int leftChild = (leftChildIndex < arr.size()) ? arr[leftChildIndex] : INT_MIN;
+        int rightChild = (rightChildIndex < arr.size()) ? arr[rightChildIndex] : INT_MIN;
 
-    int numMaxFreq;
-    int maxFreq = 0;
+        // If both children are missing, decrement ind and continue
+        if (leftChild == INT_MIN && rightChild == INT_MIN)
+        {
+            ind--;
+            continue;
+        }
 
-    for(auto it : mpp) {
-        if(it.second > maxFreq) {
-            numMaxFreq = it.first;
-            maxFreq = it.second;
+        // If right child is missing, compare only with left child
+        if (rightChild == INT_MIN)
+        {
+            if (arr[ind] < leftChild)
+            {
+                swap(arr[ind], arr[leftChildIndex]);
+            }
+            ind--;
+            continue;
+        }
+
+        int swapIndex = (leftChild > rightChild) ? leftChildIndex : rightChildIndex;
+
+        // Check if swapping is needed
+        if (arr[ind] < arr[swapIndex])
+        {
+            swap(arr[ind], arr[swapIndex]);
+            ind = swapIndex;
+        }
+
+        else
+        {
+            ind--;
         }
     }
+    return arr;
+}
 
-    
+int main()
+{
+    vector<int> arr = {10, 20, 15, 12, 40, 25, 18};
 
-    int q;
-    cin >> q;
+    vector<int> myArr = heapify(arr);
 
-    while(q--) {
-        int number;
-        cin >> number;
-        // fetch
-        cout << mpp[number] << endl;
+    for (const auto &element : myArr)
+    {
+        cout << element << " ";
     }
-
-    cout <<"number with max frequency = " << maxFreq;
 
     return 0;
 }

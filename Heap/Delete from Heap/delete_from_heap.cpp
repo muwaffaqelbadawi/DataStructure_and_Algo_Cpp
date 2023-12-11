@@ -46,6 +46,7 @@ vector<int> createMaxHeap(const vector<int> &arr)
     return heapArr;
 }
 
+// Delete from a heap
 vector<int> deleteFromHeap(vector<int> heap)
 {
     // If arr is empty return empty heapArr

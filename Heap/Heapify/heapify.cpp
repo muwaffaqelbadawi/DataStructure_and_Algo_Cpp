@@ -1,8 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Using the same logic as delete_from_heap
 vector<int> heapify(vector<int> &arr)
 {
+    // If arr is empty return empty arr
+    if (arr.empty())
+    {
+        return arr;
+    }
+
+    // If there's only one element it is already a heap
+    if (arr.size() == 1)
+    {
+        return arr;
+    }
+
     // start with the last parent node
     int ind = (arr.size() / 2) - 1;
 

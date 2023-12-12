@@ -152,10 +152,6 @@ int deleteFromHeap(vector<int> &heap, int n, int k)
     return heap[0];
 }
 
-
-
-
-
 vector<int> kthSmallLarge(vector<int> &arr, int n, int k)
 {
     vector<int> maxHeap = createMaxHeap(arr);
@@ -167,14 +163,9 @@ vector<int> kthSmallLarge(vector<int> &arr, int n, int k)
     return {KthLargestEl, KthSmallestEl};
 }
 
-
-
-
-
 int main()
 {
     vector<int> arr = {5, 6, 7, 2};
-    // 2 5 6 7
 
     vector<int> myHeap = createMaxHeap(arr);
 

@@ -44,6 +44,45 @@ void kth_Smallest_MinHeap(vector<int> &arr, int k)
     cout << "Kth Smallest element " << pq.top() << "\n";
 }
 
+class KthLargest
+{
+public:
+    priority_queue<int, vector<int>, greater<int>> pq;
+    int len;
+
+public:
+    KthLargest(int k, vector<int> &nums)
+    {
+        len = k;
+
+        for (int i = 0; i < nums.size(); i++)
+        {
+            pq.push(nums[i]);
+
+            if(k > pq.size())
+            {
+                pq.pop();
+                
+            }
+        }
+        
+    }
+
+    int add(int val)
+    {
+        pq.push(val);
+
+        if (len > pq.size())
+        {
+            pq.pop();
+        }
+
+        return pq.top();
+    }
+       
+};
+
+
 int main()
 {
     vector<int> arr = {1, 2, 6, 4, 5, 3};

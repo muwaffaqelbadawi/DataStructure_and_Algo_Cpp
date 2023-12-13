@@ -6,7 +6,7 @@
   "[cpp]": {
     "editor.defaultFormatter": "ms-vscode.cpptools"
   },
-  "C_Cpp.default.cppStandard": "gnu++20",
+  "C_Cpp.default.cppStandard": "gnu++23",
 
   "files.associations": {
     ".bash_prompt": "shellscript",

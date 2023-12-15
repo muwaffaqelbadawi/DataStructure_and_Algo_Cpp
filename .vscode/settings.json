@@ -1,6 +1,6 @@
 {
   "code-runner.executorMap": {
-    "cpp": "g++ $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt"
+    "cpp": "g++ -std=c++2b $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt"
   },
 
   "[cpp]": {

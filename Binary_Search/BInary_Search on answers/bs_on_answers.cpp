@@ -73,7 +73,7 @@ int NthRoot1(int n, int m)
     return -1;
 }
 
-// Iterative aproach
+// Iterative approach
 int funcI(int mid, int n, int m)
 {
     long long ans = 1;
@@ -166,7 +166,7 @@ int minimumRateToEatBananas(vector<int> v, int h)
     return low;
 }
 
-// Minimum days to days to make m X k Bouques
+// Minimum days to days to make m X k Bouquets
 int maxiDay(vector<int> &arr)
 {
     int maxi = INT_MIN;
@@ -481,7 +481,7 @@ int findPages(vector<int>& arr, int n, int m) {
 
 // Minimize Max Distance to Gas Station - Brute
 // k = number of gas stations to place
-long double minimiseMaxDistance(vector<int> &arr, int k)
+long double minimizeMaxDistance(vector<int> &arr, int k)
 {
     int n = arr.size();
     vector<int> howMany(n - 1, 0);
@@ -502,7 +502,7 @@ long double minimiseMaxDistance(vector<int> &arr, int k)
                 maxIndex = i;
             }
         }
-        // insert the current gas stwation
+        // insert the current gas station
         howMany[maxIndex]++;
     }
     long double maxAns = -1;

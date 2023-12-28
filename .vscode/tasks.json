@@ -6,7 +6,7 @@
       "type": "shell",
       "command": "g++",
       "args": [
-        "-std=c++23",
+        "-std=c++2b",
         "-o",
         "${relativeFileDirname}/${fileBasenameNoExtension}",
         "${file}",

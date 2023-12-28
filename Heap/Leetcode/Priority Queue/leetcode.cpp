@@ -15,7 +15,9 @@ vector<int> createMaxHeap(const vector<int> &arr)
 
     // If arr is empty return empty heapArr
     if (arr.empty())
+    {
         return heapArr;
+    }
 
     // If there's only one element it considers Max Heap or Min Heap
     if (arr.size() == 1)
@@ -43,8 +45,11 @@ vector<int> createMaxHeap(const vector<int> &arr)
                 swap(heapArr[ind], heapArr[(ind - 1) / 2]);
                 ind = (ind - 1) / 2;
             }
+
             else
+            {
                 break;
+            }
         }
     }
     return heapArr;

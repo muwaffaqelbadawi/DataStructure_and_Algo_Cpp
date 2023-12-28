@@ -8,7 +8,7 @@ int main()
 
     // Problems
 
-    /* // 1. Find the first occurence of a X in a sorted array.
+    /* // 1. Find the first occurrence of a X in a sorted array.
     // If it does not exists, print -1
     vector<int> arr = {1,4,4,4,4,9,9,10,11};
     int n = arr.size();
@@ -16,7 +16,7 @@ int main()
     if(ind != n && arr[ind] == x) cout << ind;
     else cout << -1;  */
     
-    /* // 2. Find the last occurence of a X in a sorted array.
+    /* // 2. Find the last occurrence of a X in a sorted array.
     // If it does not exists, print -1
     vector<int> arr = {1,4,4,4,4,9,9,10,11};
     int n = arr.size();

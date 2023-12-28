@@ -183,8 +183,9 @@ int minNonZeroEl(const vector<int> &nums)
 
     return (it != nums.end()) ? *it : INT_MAX;
 }
+*/
 
- */
+/*
 
 int minNonZeroEl(vector<int> &nums)
 {
@@ -231,12 +232,45 @@ int minimumOperations(vector<int> &nums)
     return cnt;
 }
 
+*/
+
+int deleteGreatestValue(vector<vector<int>> &grid)
+{
+    int cnt = 0;
+    int m = grid.size();
+
+    priority_queue<pair<int, int>> pq; // Pair of row elements and their index
+
+    for (int i = 0; i < m; i++)
+    {
+        int n = grid[i].size();
+
+        for (int j = 0; j < n; j++)
+        {
+            pq.push({grid[i][j], j});
+        }
+
+        while (!pq.empty())
+        {
+            int maxEl = pq.top().first;
+            int maxElInd = pq.top().second;
+            pq.pop();
+
+            cnt += maxEl;
+
+            cout << cnt << endl;
+
+        }
+    }
+    return cnt;
+}
+
+
 int main()
 {
-    vector<int> arr = {1, 5, 0, 3, 5};
-    const int minOps = minimumOperations(arr);
-
-    cout << minOps << endl;
+    vector<vector<int>> grid = {{1, 2, 4}, {3, 3, 1}};
+    int result = deleteGreatestValue(grid);
+    cout << result << endl;
 
     return 0;
 }

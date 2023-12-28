@@ -4,7 +4,7 @@ using namespace std;
 // Using the same logic as delete_from_heap
 vector<int> heapify(vector<int> &arr)
 {
-    // If arr is empty or has only element it's already a heap
+    // If arr is empty or has only one element it's already a heap
     if (arr.empty() || arr.size() == 1)
     {
         return arr;
@@ -22,7 +22,7 @@ vector<int> heapify(vector<int> &arr)
         int leftChild = (leftChildIndex < arr.size()) ? arr[leftChildIndex] : INT_MIN;
         int rightChild = (rightChildIndex < arr.size()) ? arr[rightChildIndex] : INT_MIN;
 
-        // If both children are missing, decrement ind and continue
+        // If both children are missing, decrement ind and start over the iteration
         if (leftChild == INT_MIN && rightChild == INT_MIN)
         {
             ind--;

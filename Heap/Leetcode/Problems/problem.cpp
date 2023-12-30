@@ -186,7 +186,6 @@ int minNonZeroEl(const vector<int> &nums)
 */
 
 /*
-
 int minNonZeroEl(vector<int> &nums)
 {
     int minEl = INT_MAX;
@@ -231,44 +230,92 @@ int minimumOperations(vector<int> &nums)
     }
     return cnt;
 }
-
 */
+
+pair<int, int> findMax(vector<int> &arr)
+{
+    int maxi = INT_MIN;
+    pair<int, int> maxiInd;
+    int n = arr.size();
+
+    for (int i = 0; i < n; i++) 
+    {
+        if (arr[i] > maxi)
+        {
+            maxi = arr[i];
+            maxiInd = make_pair(maxi, i);
+        }
+    }
+    return maxiInd;
+}
 
 int deleteGreatestValue(vector<vector<int>> &grid)
 {
-    int cnt = 0;
     int m = grid.size();
+    int cnt = 0;
+    while (!grid[m-1].empty())
+    {
+        vector<int> maxElements;
+        for (int i = 0; i < m; i++)
+        {
+            int maxEl, Ind;
+            tie(maxEl, Ind) = findMax(grid[i]);
 
-    priority_queue<pair<int, int>> pq; // Pair of row elements and their index
+            maxElements.push_back(maxEl);
+            grid[i].erase(grid[i].begin() + Ind);
+        }
+        cnt += *max_element(maxElements.begin(), maxElements.end());
+    }
+    return cnt;
 
+
+
+   /*
+    priority_queue<pair<int, pair<int, int>>> pq;
     for (int i = 0; i < m; i++)
     {
         int n = grid[i].size();
-
         for (int j = 0; j < n; j++)
         {
-            pq.push({grid[i][j], j});
-        }
-
-        while (!pq.empty())
-        {
-            int maxEl = pq.top().first;
-            int maxElInd = pq.top().second;
-            pq.pop();
-
-            cnt += maxEl;
-
-            cout << cnt << endl;
-
+            pq.push({grid[i][j], {i, j}});
         }
     }
-    return cnt;
-}
 
+    if (pq.size() == 1)
+    {
+        int row = pq.top().second.first;
+        int column = pq.top().second.second;
+        grid[row].erase(grid[row].begin() + column);
+        cnt += pq.top().first;
+
+        pq.pop();
+        return cnt;
+    }
+
+    while (!pq.empty())
+    {
+        int maxEl = INT_MIN;
+        for (int i = 0; i < 2; i++)
+        {
+            int row = pq.top().second.first;
+            int column = pq.top().second.second;
+            if (column < grid[row].size())
+            {
+                grid[row].erase(grid[row].begin() + column);
+            }
+
+            maxEl = max(maxEl, pq.top().first);
+            pq.pop();
+        }
+        cnt += maxEl;
+    }
+    return cnt;
+ */
+}
 
 int main()
 {
-    vector<vector<int>> grid = {{1, 2, 4}, {3, 3, 1}};
+    vector<vector<int>> grid = {{58, 42, 8, 75, 28}, {35, 21, 13, 21, 72}};
     int result = deleteGreatestValue(grid);
     cout << result << endl;
 

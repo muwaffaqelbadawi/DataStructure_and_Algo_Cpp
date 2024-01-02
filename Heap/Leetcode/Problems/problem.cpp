@@ -232,91 +232,113 @@ int minimumOperations(vector<int> &nums)
 }
 */
 
-pair<int, int> findMax(vector<int> &arr)
-{
-    int maxi = INT_MIN;
-    pair<int, int> maxiInd;
-    int n = arr.size();
 
-    for (int i = 0; i < n; i++) 
-    {
-        if (arr[i] > maxi)
-        {
-            maxi = arr[i];
-            maxiInd = make_pair(maxi, i);
-        }
-    }
-    return maxiInd;
-}
-
-int deleteGreatestValue(vector<vector<int>> &grid)
+// Brute force (naive)
+int deleteGreatestValue1(vector<vector<int>> &grid)
 {
     int m = grid.size();
     int cnt = 0;
-    while (!grid[m-1].empty())
+    while (any_of(grid.begin(), grid.end(), [](const vector<int> &row){ return !row.empty(); }))
     {
         vector<int> maxElements;
         for (int i = 0; i < m; i++)
         {
-            int maxEl, Ind;
-            tie(maxEl, Ind) = findMax(grid[i]);
+            int maxEl = INT_MIN;
+            pair<int, int> maxElInd;
 
-            maxElements.push_back(maxEl);
-            grid[i].erase(grid[i].begin() + Ind);
+            int n = grid[i].size();
+            for (int j = 0; j < n; j++)
+            {
+                if (grid[i][j] > maxEl)
+                {
+                    maxEl = grid[i][j];
+                    maxElInd = make_pair(maxEl, j);
+                }
+            }
+
+            maxElements.push_back(maxElInd.first);
+            grid[i].erase(grid[i].begin() + maxElInd.second);
         }
         cnt += *max_element(maxElements.begin(), maxElements.end());
     }
     return cnt;
+}
 
+// Brute force (naive)
+int deleteGreatestValue2(vector<vector<int>> &grid)
+{
+    int m = grid.size();
 
-
-   /*
-    priority_queue<pair<int, pair<int, int>>> pq;
     for (int i = 0; i < m; i++)
     {
-        int n = grid[i].size();
-        for (int j = 0; j < n; j++)
-        {
-            pq.push({grid[i][j], {i, j}});
-        }
+        sort(grid[i].begin(), grid[i].end());
     }
 
-    if (pq.size() == 1)
+    int cnt = 0;
+    while (any_of(grid.begin(), grid.end(), [](const vector<int> &row) { return !row.empty(); }))
     {
-        int row = pq.top().second.first;
-        int column = pq.top().second.second;
-        grid[row].erase(grid[row].begin() + column);
-        cnt += pq.top().first;
+        vector<int> maxElements;
 
-        pq.pop();
-        return cnt;
-    }
-
-    while (!pq.empty())
-    {
-        int maxEl = INT_MIN;
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < m; i++)
         {
-            int row = pq.top().second.first;
-            int column = pq.top().second.second;
-            if (column < grid[row].size())
+            if(!grid[i].empty())
             {
-                grid[row].erase(grid[row].begin() + column);
+                int maxEl = grid[i].back();
+                grid[i].pop_back();
+                maxElements.push_back(maxEl);
             }
-
-            maxEl = max(maxEl, pq.top().first);
-            pq.pop();
         }
-        cnt += maxEl;
+        cnt += *max_element(maxElements.begin(), maxElements.end());
     }
     return cnt;
- */
 }
+
+
+// O.P.
+int deleteGreatestValueOpt(vector<vector<int>> &grid)
+{
+    auto lessThan = [](pair<int, int> &num1, pair<int, int> &num2) { return num1.first < num2.first; };
+
+    priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(lessThan)> pq(lessThan);
+
+    int m = grid.size();
+
+    for (int i = 0; i < m; i++)
+    {
+        sort(grid[i].begin(), grid[i].end());
+
+        if (!grid[i].empty())
+        {
+            pq.push({grid[i].back(), i});
+            grid[i].pop_back();
+        }
+    }
+
+    int cnt = 0;
+    while (!pq.empty())
+    {
+        pair<int, int> maxEl = pq.top();
+        pq.pop();
+        cnt += maxEl.first;
+
+        int rowIndex = maxEl.second;
+        if (!grid[rowIndex].empty())
+        {
+            pq.push({grid[rowIndex].back(), rowIndex});
+            grid[rowIndex].pop_back();
+        }
+    }
+    return cnt;
+}
+
+
+
+
 
 int main()
 {
     vector<vector<int>> grid = {{58, 42, 8, 75, 28}, {35, 21, 13, 21, 72}};
-    int result = deleteGreatestValue(grid);
+    int result = deleteGreatestValueOpt(grid);
     cout << result << endl;
 
     return 0;

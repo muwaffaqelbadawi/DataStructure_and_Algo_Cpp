@@ -178,8 +178,7 @@ int maxProduct(vector<int> &nums)
 /* // lambda approach
 int minNonZeroEl(const vector<int> &nums)
 {
-    auto it = min_element(nums.begin(), nums.end(), [](int a, int b)
-                          { return a > 0 && (b == 0 || a < b); });
+    auto it = min_element(nums.begin(), nums.end(), [](int a, int b) { return a > 0 && (b == 0 || a < b); });
 
     return (it != nums.end()) ? *it : INT_MAX;
 }
@@ -232,32 +231,35 @@ int minimumOperations(vector<int> &nums)
 }
 */
 
-
 // Brute force (naive)
 int deleteGreatestValue1(vector<vector<int>> &grid)
 {
     int m = grid.size();
     int cnt = 0;
-    while (any_of(grid.begin(), grid.end(), [](const vector<int> &row){ return !row.empty(); }))
+    while (any_of(grid.begin(), grid.end(), [](const vector<int> &row) { return !row.empty(); }))
     {
         vector<int> maxElements;
         for (int i = 0; i < m; i++)
         {
-            int maxEl = INT_MIN;
-            pair<int, int> maxElInd;
+            int maxi = INT_MIN;
+            pair<int, pair<int, int>> maxElInd;
 
             int n = grid[i].size();
             for (int j = 0; j < n; j++)
             {
-                if (grid[i][j] > maxEl)
+                if (grid[i][j] > maxi)
                 {
-                    maxEl = grid[i][j];
-                    maxElInd = make_pair(maxEl, j);
+                    maxi = grid[i][j];
+                    maxElInd = make_pair(maxi, make_pair(i, j));
                 }
             }
 
-            maxElements.push_back(maxElInd.first);
-            grid[i].erase(grid[i].begin() + maxElInd.second);
+            int maxEl = maxElInd.first;
+            int ith, jth;
+            tie(ith, jth) = maxElInd.second;
+
+            maxElements.push_back(maxEl);
+            grid[ith].erase(grid[ith].begin() + jth);
         }
         cnt += *max_element(maxElements.begin(), maxElements.end());
     }
@@ -281,7 +283,7 @@ int deleteGreatestValue2(vector<vector<int>> &grid)
 
         for (int i = 0; i < m; i++)
         {
-            if(!grid[i].empty())
+            if (!grid[i].empty())
             {
                 int maxEl = grid[i].back();
                 grid[i].pop_back();
@@ -293,47 +295,43 @@ int deleteGreatestValue2(vector<vector<int>> &grid)
     return cnt;
 }
 
-
-// O.P.
+// Brute with Priority Queue
 int deleteGreatestValueOpt(vector<vector<int>> &grid)
 {
-    auto lessThan = [](pair<int, int> &num1, pair<int, int> &num2) { return num1.first < num2.first; };
+    priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>> pq;
 
-    priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(lessThan)> pq(lessThan);
+    int cnt = 0;
 
     int m = grid.size();
 
-    for (int i = 0; i < m; i++)
+    while (any_of(grid.begin(), grid.end(), [](const vector<int> &row) { return !row.empty(); }))
     {
-        sort(grid[i].begin(), grid[i].end());
+        priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>> maxPQ;
 
-        if (!grid[i].empty())
+        for (int i = 0; i < m; i++)
         {
-            pq.push({grid[i].back(), i});
-            grid[i].pop_back();
-        }
-    }
+            int n = grid[i].size();
 
-    int cnt = 0;
-    while (!pq.empty())
-    {
-        pair<int, int> maxEl = pq.top();
-        pq.pop();
-        cnt += maxEl.first;
+            for (int j = 0; j < n; j++)
+            {
+                pq.push(make_tuple(grid[i][j], i, j));
+            }
 
-        int rowIndex = maxEl.second;
-        if (!grid[rowIndex].empty())
-        {
-            pq.push({grid[rowIndex].back(), rowIndex});
-            grid[rowIndex].pop_back();
+            int maxEl, ith, jth;
+            tie(maxEl, ith, jth) = pq.top();
+
+            maxPQ.push(pq.top());
+            grid[ith].erase(grid[ith].begin() + jth);
+
+            while (!pq.empty())
+            {
+                pq.pop();
+            }
         }
+        cnt += get<0>(maxPQ.top());
     }
     return cnt;
 }
-
-
-
-
 
 int main()
 {

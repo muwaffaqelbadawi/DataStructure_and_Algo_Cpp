@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-/*
 vector<string> findRelativeRanks(const vector<int> &score)
 {
     priority_queue<pair<int, int>> pq; // Pair of score and index
@@ -44,9 +43,7 @@ vector<string> findRelativeRanks(const vector<int> &score)
 
     return rankList;
 }
-*/
 
-/*
 vector<string> findRelativeRanks(vector<int> score)
 {
     int n = score.size();
@@ -77,9 +74,7 @@ vector<string> findRelativeRanks(vector<int> score)
     }
     return res;
 }
-*/
 
-/*
 vector<string> findRelativeRanks(const vector<int> &score)
 {
     priority_queue<pair<int, int>> pq;
@@ -120,9 +115,7 @@ vector<string> findRelativeRanks(const vector<int> &score)
     }
     return rankList;
 }
-*/
 
-/*
 long long pickGifts(vector<int> &gifts, int k)
 {
     priority_queue<int> pq;
@@ -150,9 +143,7 @@ long long pickGifts(vector<int> &gifts, int k)
     }
     return sum;
 }
-*/
 
-/*
 int maxProduct(vector<int> &nums)
 {
     priority_queue<int, vector<int>, greater<int>> pq;
@@ -173,18 +164,15 @@ int maxProduct(vector<int> &nums)
 
     return (max1 - 1) * (max2 - 1);
 }
-*/
 
-/* // lambda approach
+// lambda approach
 int minNonZeroEl(const vector<int> &nums)
 {
     auto it = min_element(nums.begin(), nums.end(), [](int a, int b) { return a > 0 && (b == 0 || a < b); });
 
     return (it != nums.end()) ? *it : INT_MAX;
 }
-*/
 
-/*
 int minNonZeroEl(vector<int> &nums)
 {
     int minEl = INT_MAX;
@@ -229,7 +217,6 @@ int minimumOperations(vector<int> &nums)
     }
     return cnt;
 }
-*/
 
 // Brute force (naive)
 int deleteGreatestValue1(vector<vector<int>> &grid)
@@ -333,10 +320,53 @@ int deleteGreatestValueOpt(vector<vector<int>> &grid)
     return cnt;
 }
 
+// Better (priority Queue)
+int deleteGreatestValueBetter(vector<vector<int>> &grid)
+{
+    priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>> pq;
+
+    int cnt = 0;
+
+    int m = grid.size();
+
+    for (int i = 0; i < m; i++)
+    {
+        int n = grid[i].size();
+        for (int j = 0; j < n; j++)
+        {
+            pq.push(make_tuple(grid[i][j], i, j));
+        }
+    }
+
+    while (!pq.empty())
+    {
+        vector<tuple<int, int, int>> temp;
+
+        tuple<int, int, int> topEl = pq.top();
+        int greatEl, ith, jth;
+        tie(greatEl, ith, jth) = topEl;
+        pq.pop();
+
+        while (get<1>(pq.top()) == ith)
+        {
+            temp.push_back(pq.top());
+            pq.pop();
+        }
+        pq.pop();
+        
+        for (int i = 0; i < temp.size(); i++)
+        {
+            pq.push(temp[i]);
+        }
+        cnt += greatEl;
+    }
+    return cnt;
+}
+
 int main()
 {
     vector<vector<int>> grid = {{58, 42, 8, 75, 28}, {35, 21, 13, 21, 72}};
-    int result = deleteGreatestValueOpt(grid);
+    int result = deleteGreatestValueBetter(grid);
     cout << result << endl;
 
     return 0;

@@ -1,7 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<string> findRelativeRanks(const vector<int> &score)
+/*
+
+vector<string> findRelativeRanks1(const vector<int> &score)
 {
     priority_queue<pair<int, int>> pq; // Pair of score and index
     vector<string> rankList(score.size());
@@ -44,7 +46,7 @@ vector<string> findRelativeRanks(const vector<int> &score)
     return rankList;
 }
 
-vector<string> findRelativeRanks(vector<int> score)
+vector<string> findRelativeRanks2(vector<int> &score)
 {
     int n = score.size();
 
@@ -75,7 +77,7 @@ vector<string> findRelativeRanks(vector<int> score)
     return res;
 }
 
-vector<string> findRelativeRanks(const vector<int> &score)
+vector<string> findRelativeRanks3(const vector<int> &score)
 {
     priority_queue<pair<int, int>> pq;
     vector<string> rankList(score.size());
@@ -166,7 +168,7 @@ int maxProduct(vector<int> &nums)
 }
 
 // lambda approach
-int minNonZeroEl(const vector<int> &nums)
+int minNonZeroElLambda(const vector<int> &nums)
 {
     auto it = min_element(nums.begin(), nums.end(), [](int a, int b) { return a > 0 && (b == 0 || a < b); });
 
@@ -321,6 +323,9 @@ int deleteGreatestValueOpt(vector<vector<int>> &grid)
 }
 
 // Better (priority Queue)
+
+*/
+
 int deleteGreatestValueBetter(vector<vector<int>> &grid)
 {
     priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>> pq;
@@ -341,24 +346,41 @@ int deleteGreatestValueBetter(vector<vector<int>> &grid)
     while (!pq.empty())
     {
         vector<tuple<int, int, int>> temp;
+        vector<bool> checkList(m, false);
 
-        tuple<int, int, int> topEl = pq.top();
         int greatEl, ith, jth;
-        tie(greatEl, ith, jth) = topEl;
-        pq.pop();
+        tie(greatEl, ith, jth) = pq.top();
 
-        while (get<1>(pq.top()) == ith)
+        while (!all_of(checkList.begin(), checkList.end(), [](const bool &row) { return true; }))
         {
-            temp.push_back(pq.top());
-            pq.pop();
+            // If all rows are false
+            if (all_of(checkList.begin(), checkList.end(), [](const bool &row) { return false; }))
+            {
+                checkList[ith] = true;
+                cnt += greatEl;
+                pq.pop();
+
+                tie(greatEl, ith, jth) = pq.top();
+            }
+ 
+            else if (!checkList[ith])
+            {
+                checkList[ith] = true;
+                pq.pop();
+            }
+
+            else
+            {
+                temp.push_back(pq.top());
+                pq.pop();
+            }
         }
-        pq.pop();
-        
-        for (int i = 0; i < temp.size(); i++)
+
+        while (!temp.empty())
         {
-            pq.push(temp[i]);
+            pq.push(temp.back());
+            temp.pop_back();
         }
-        cnt += greatEl;
     }
     return cnt;
 }

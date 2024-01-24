@@ -326,6 +326,7 @@ int deleteGreatestValueOpt(vector<vector<int>> &grid)
 
 */
 
+
 int deleteGreatestValueBetter(vector<vector<int>> &grid)
 {
     priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>> pq;
@@ -348,19 +349,17 @@ int deleteGreatestValueBetter(vector<vector<int>> &grid)
         vector<tuple<int, int, int>> temp;
         vector<bool> checkList(m, false);
 
-        int greatEl, ith, jth;
-        tie(greatEl, ith, jth) = pq.top();
-
-        while (!all_of(checkList.begin(), checkList.end(), [](const bool &row) { return true; }))
+        while (accumulate(checkList.begin(), checkList.end(), 0) < m)
         {
+            int greatEl, ith, jth;
+            tie(greatEl, ith, jth) = pq.top();
+
             // If all rows are false
-            if (all_of(checkList.begin(), checkList.end(), [](const bool &row) { return false; }))
+            if (accumulate(checkList.begin(), checkList.end(), 0) == 0)
             {
                 checkList[ith] = true;
                 cnt += greatEl;
                 pq.pop();
-
-                tie(greatEl, ith, jth) = pq.top();
             }
  
             else if (!checkList[ith])
@@ -387,9 +386,8 @@ int deleteGreatestValueBetter(vector<vector<int>> &grid)
 
 int main()
 {
-    vector<vector<int>> grid = {{58, 42, 8, 75, 28}, {35, 21, 13, 21, 72}};
+    vector<vector<int>> grid = {{5, 10, 98, 2}, {13, 80, 6, 3}, {60, 66, 5, 82}, {35, 42, 16, 9}};
     int result = deleteGreatestValueBetter(grid);
     cout << result << endl;
-
     return 0;
 }

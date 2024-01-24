@@ -98,7 +98,8 @@
     "variant": "cpp",
     "expected": "cpp",
     "spanstream": "cpp",
-    "stacktrace": "cpp"
+    "stacktrace": "cpp",
+    "format": "cpp"
   },
   "cSpell.words": ["heapify", "Koko", "Kthsllest", "Leetcode"]
 }

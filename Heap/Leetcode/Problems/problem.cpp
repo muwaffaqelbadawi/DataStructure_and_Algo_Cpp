@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-/*
-
 vector<string> findRelativeRanks1(const vector<int> &score)
 {
     priority_queue<pair<int, int>> pq; // Pair of score and index
@@ -190,8 +188,8 @@ int minNonZeroEl(vector<int> &nums)
 
 int minimumOperations(vector<int> &nums)
 {
-    int sumNums = accumulate(nums.begin(), nums.end(), 0);
     int cnt = 0;
+    int sumNums = accumulate(nums.begin(), nums.end(), 0);
 
     if (sumNums == 0)
     {
@@ -223,8 +221,8 @@ int minimumOperations(vector<int> &nums)
 // Brute force (naive)
 int deleteGreatestValue1(vector<vector<int>> &grid)
 {
-    int m = grid.size();
     int cnt = 0;
+    int m = grid.size();
     while (any_of(grid.begin(), grid.end(), [](const vector<int> &row) { return !row.empty(); }))
     {
         vector<int> maxElements;
@@ -256,16 +254,17 @@ int deleteGreatestValue1(vector<vector<int>> &grid)
 }
 
 // Brute force (naive)
+// altering the data!!
 int deleteGreatestValue2(vector<vector<int>> &grid)
 {
+    int cnt = 0;
     int m = grid.size();
 
     for (int i = 0; i < m; i++)
     {
         sort(grid[i].begin(), grid[i].end());
     }
-
-    int cnt = 0;
+    
     while (any_of(grid.begin(), grid.end(), [](const vector<int> &row) { return !row.empty(); }))
     {
         vector<int> maxElements;
@@ -284,8 +283,8 @@ int deleteGreatestValue2(vector<vector<int>> &grid)
     return cnt;
 }
 
-// Brute with Priority Queue
-int deleteGreatestValueOpt(vector<vector<int>> &grid)
+// Brute with two priority queues
+int deleteGreatestValue2PQ(vector<vector<int>> &grid)
 {
     priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>> pq;
 
@@ -323,10 +322,6 @@ int deleteGreatestValueOpt(vector<vector<int>> &grid)
 }
 
 // Better (priority Queue)
-
-*/
-
-
 int deleteGreatestValueBetter(vector<vector<int>> &grid)
 {
     priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>> pq;
